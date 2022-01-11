@@ -10,15 +10,20 @@ export const createOrder = (order) => async(dispatch, getState) => {
         dispatch,
         method.POST,
         url,
-        order,
-        {Authorization: `Bearer ${userInfo.token}`},
         oc.ORDER_CREATE_REQUEST,
         oc.ORDER_CREATE_SUCCESS,
         oc.ORDER_CREATE_FAIL,
-        true,
-        CART_EMPTY
+        {
+            sendData:       order,
+            header:         {Authorization: `Bearer ${userInfo.token}`},
+            secondDispatch: true,
+            secondConstant: CART_EMPTY
+        }
     )
+
 }
+
+
 
 export const detailsOrder = (orderId) => async (dispatch, getState) => {
     const {userSignin:{userInfo}} = getState();
@@ -27,11 +32,12 @@ export const detailsOrder = (orderId) => async (dispatch, getState) => {
         dispatch,
         method.GET,
         url,
-        {},
-        {Authorization: `Bearer ${userInfo.token}`},
         oc.ORDER_DETAIL_REQUEST,
         oc.ORDER_DETAIL_SUCCESS,
         oc.ORDER_DETAIL_FAIL,
+        {
+            header: {Authorization: `Bearer ${userInfo.token}`}
+        }
     );
 }
 
@@ -42,11 +48,13 @@ export const payOrder = (order, paymentResult) => async (dispatch, getState) => 
         dispatch,
         method.PUT,
         url,
-        paymentResult,
-        {Authorization: `Bearer ${userInfo.token}`},
         oc.ORDER_PAY_REQUEST,
         oc.ORDER_PAY_SUCCESS,
-        oc.ORDER_PAY_FAIL
+        oc.ORDER_PAY_FAIL,
+        {
+            sendData:   paymentResult,
+            header:     {Authorization: `Bearer ${userInfo.token}`},
+        }
     )
 }
 
@@ -57,11 +65,12 @@ export const deliverOrder = (orderId) => async (dispatch, getState) => {
         dispatch,
         method.PUT,
         url,
-        {},
-        {Authorization: `Bearer ${userInfo.token}`},
         oc.ORDER_DELIVER_REQUEST,
         oc.ORDER_DELIVER_SUCCESS,
-        oc.ORDER_DELIVER_FAIL
+        oc.ORDER_DELIVER_FAIL,
+        {
+            header: {Authorization: `Bearer ${userInfo.token}`}
+        }
     )
 }
 
@@ -72,11 +81,12 @@ export const listOrderMine = () => async (dispatch, getState) => {
         dispatch,
         method.GET,
         url,
-        {},
-        {Authorization: `Bearer ${userInfo.token}`},
         oc.ORDER_MINE_LIST_REQUEST,
         oc.ORDER_MINE_LIST_SUCCESS,
-        oc.ORDER_MINE_LIST_FAIL
+        oc.ORDER_MINE_LIST_FAIL,
+        {
+            header: {Authorization: `Bearer ${userInfo.token}`}
+        }
     )
 }
 
@@ -87,11 +97,12 @@ export const listOrder = ({pageNumber=''}) => async (dispatch, getState) => {
         dispatch,
         method.GET,
         url,
-        {},
-        {Authorization: `Bearer ${userInfo.token}`},
         oc.ORDER_LIST_REQUEST,
         oc.ORDER_LIST_SUCCESS,
-        oc.ORDER_LIST_FAIL
+        oc.ORDER_LIST_FAIL,
+        {
+            header: {Authorization: `Bearer ${userInfo.token}`}
+        }
     )
 }
 
@@ -102,11 +113,12 @@ export const deleteOrder = (orderId) => async (dispatch, getState) => {
         dispatch,
         method.DELETE,
         url,
-        {},
-        {Authorization: `Bearer ${userInfo.token}`},
         oc.ORDER_DELETE_REQUEST,
         oc.ORDER_DELETE_SUCCESS,
-        oc.ORDER_DELETE_FAIL
+        oc.ORDER_DELETE_FAIL,
+        {
+            header: {Authorization: `Bearer ${userInfo.token}`}
+        }
     )
 }
 
@@ -117,10 +129,11 @@ export const summaryOrder = () => async (dispatch, getState) => {
         dispatch,
         method.GET,
         url,
-        {},
-        {Authorization: `Bearer ${userInfo.token}`},
         oc.ORDER_SUMMARY_REQUEST,
         oc.ORDER_SUMMARY_SUCCESS,
-        oc.ORDER_SUMMARY_FAIL
+        oc.ORDER_SUMMARY_FAIL,
+        {
+            header: {Authorization: `Bearer ${userInfo.token}`}
+        }
     )
 }

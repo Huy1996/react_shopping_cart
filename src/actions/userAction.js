@@ -9,16 +9,16 @@ export const signin = (email, password) => async (dispatch) => {
         dispatch,
         method.POST,
         url,
-        {email, password},
-        {},
         uc.USER_SIGNIN_REQUEST,
         uc.USER_SIGNIN_SUCCESS,
         uc.USER_SIGNIN_FAIL,
-        false,
-        '',
-        true,
-        USER_INFO
+        {
+            sendData:   {email, password},
+            store:      true,
+            storeName:  USER_INFO
+        }
     )
+
 }
 
 export const  register = (name, email, password) => async (dispatch) => {
@@ -27,15 +27,16 @@ export const  register = (name, email, password) => async (dispatch) => {
         dispatch,
         method.POST,
         url,
-        {name, email, password},
-        {},
         uc.USER_REGISTER_REQUEST,
         uc.USER_REGISTER_SUCCESS,
         uc.USER_REGISTER_FAIL,
-        true,
-        uc.USER_SIGNIN_SUCCESS,
-        true,
-        USER_INFO
+        {
+            sendData:       {name, email, password},
+            secondDispatch: true,
+            secondConstant: uc.USER_SIGNIN_SUCCESS,
+            store:          true,
+            storeName:      USER_INFO
+        }
     )
 }
 
@@ -52,11 +53,12 @@ export const detailsUser = (userId) => async (dispatch, getState) => {
         dispatch,
         method.GET,
         url,
-        {},
-        {Authorization: `Bearer ${userInfo.token}`},
         uc.USER_DETAILS_REQUEST,
         uc.USER_DETAILS_SUCCESS,
-        uc.USER_DELETE_FAIL
+        uc.USER_DELETE_FAIL,
+        {
+            header: {Authorization: `Bearer ${userInfo.token}`}
+        }
     )
 }
 
@@ -67,15 +69,17 @@ export const updateUserProfile = (user) => async (dispatch, getState) => {
         dispatch,
         method.PUT,
         url,
-        user,
-        {Authorization: `Bearer ${userInfo.token}`},
         uc.USER_UPDATE_PROFILE_REQUEST,
         uc.USER_UPDATE_PROFILE_SUCCESS,
         uc.USER_UPDATE_PROFILE_FAIL,
-        true,
-        uc.USER_SIGNIN_SUCCESS,
-        true,
-        USER_INFO
+        {
+            sendData:       user,
+            header:         {Authorization: `Bearer ${userInfo.token}`},
+            secondDispatch: true,
+            secondConstant: uc.USER_SIGNIN_SUCCESS,
+            store:          true,
+            storeName:      USER_INFO
+        }
     )
 }
 
@@ -86,11 +90,12 @@ export const listUsers = ({pageNumber=''}) => async (dispatch, getState) => {
         dispatch,
         method.GET,
         url,
-        {},
-        {Authorization: `Bearer ${userInfo.token}`},
         uc.USER_LIST_REQUEST,
         uc.USER_LIST_SUCCESS,
-        uc.USER_LIST_FAIL
+        uc.USER_LIST_FAIL,
+        {
+            header: {Authorization: `Bearer ${userInfo.token}`}
+        }
     )
 }
 
@@ -101,11 +106,12 @@ export const deleteUser = (userId) => async(dispatch, getState) => {
         dispatch,
         method.DELETE,
         url,
-        {},
-        {Authorization: `Bearer ${userInfo.token}`},
         uc.USER_DELETE_REQUEST,
         uc.USER_DELETE_SUCCESS,
-        uc.USER_DELETE_FAIL
+        uc.USER_DELETE_FAIL,
+        {
+            header: {Authorization: `Bearer ${userInfo.token}`}
+        }
     )
 }
 
@@ -116,10 +122,12 @@ export const updateUser = (user) => async (dispatch, getState) => {
         dispatch,
         method.PUT,
         url,
-        user,
-        {Authorization: `Bearer ${userInfo.token}`},
         uc.USER_UPDATE_REQUEST,
         uc.USER_UPDATE_SUCCESS,
-        uc.USER_UPDATE_FAIL
+        uc.USER_UPDATE_FAIL,
+        {
+            sendData:   user,
+            header:     {Authorization: `Bearer ${userInfo.token}`}
+        }
     )
 }

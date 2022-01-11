@@ -13,8 +13,8 @@ import PlaceOrderScreen from "./screens/PlaceOrderScreen";
 import OrderScreen from "./screens/OrderScreen";
 import OrderHistoryScreen from "./screens/OrderHistoryScreen";
 import ProfileScreen from "./screens/ProfileScreen";
-import PrivateRoute from "./components/PrivateRoute";
-import AdminRoute from "./components/AdminRoute";
+import Private from "./components/Private";
+import Admin from "./components/Admin";
 import ProductListScreen from "./screens/ProductListScreen";
 import ProductEditScreen from "./screens/ProductEditScreen";
 import OrderListScreen from "./screens/OrderListScreen";
@@ -22,13 +22,11 @@ import UserListScreen from "./screens/UserListScreen";
 import UserEditScreen from "./screens/UserEditScreen";
 import SearchBox from "./components/SearchBox";
 import SearchScreen from "./screens/SearchScreen";
-import { listProductsCategories } from "./actions/productAction";
-import LoadingBox from "./components/LoadingBox";
-import MessageBox from "./components/MessageBox";
 import MapScreen from "./screens/MapScreen";
 import DashboardScreen from "./screens/DashboardScreen";
 import SupportScreen from "./screens/SupportScreen";
 import ChatBox from "./components/ChatBox";
+import SideBar from "./components/SideBar";
 
 function App() {
 
@@ -41,16 +39,9 @@ function App() {
 
     const dispatch = useDispatch()
 
-    const productCategoryList = useSelector(state => state.productCategoryList);
-    const {loading: loadingCategory, error: errorCategory, categories } = productCategoryList;
-
     const signoutHandler = () => {
         dispatch(signout())
     }
-
-    useEffect(() => {
-        dispatch(listProductsCategories());
-    }, [dispatch])
 
     return (
         <BrowserRouter>
@@ -60,11 +51,12 @@ function App() {
                         <button
                             type="button"
                             className="open-sidebar"
-                            onClick={() => setSidebarIsOpen(true)}>
+                            onClick={() => setSidebarIsOpen(true)}
+                        >
                             <i className="fa fa-bars" />
                         </button>
                         <Link className="brand" to="/">
-                            Shopping Cart
+                            CHTQ Shopping
                         </Link>
                     </div>
                     <div>
@@ -144,61 +136,45 @@ function App() {
                         }
                     </div>
                 </header>
-                <aside className={sidebarIsOpen ? 'open' : ''} >
-                    <ul className="categories">
-                        <li>
-                            <strong>categories</strong>
-                            <button onClick={() => setSidebarIsOpen(false)}>
-                                <i className="fa fa-close" />
-                            </button>
-                        </li>
-                        {
-                            loadingCategory ? (<LoadingBox />) :
-                                errorCategory ? (<MessageBox variant="danger">{errorCategory}</MessageBox>) :
-                                    (
-                                        categories.map((c) => (
-                                            <li key={c}>
-                                                <Link to={`/search/category/${c}`} onClick={() => setSidebarIsOpen(false)}>{c}</Link>
-                                            </li>
-                                        ))
-                                    )
-                        }
-                    </ul>
-                </aside>
+                <SideBar
+                    open={sidebarIsOpen}
+                    closeSideBar={close => setSidebarIsOpen(close)}
+                />
                 <main>
                     <Routes>
-                        <Route path="/cart"                                                                                                        element={<CartScreen/>}                                          />
-                        <Route path="/cart/:id"                                                                                                    element={<CartScreen/>}                                          />
-                        <Route path="/product/:id"                                                                                                 element={<ProductScreen/>}                                 exact />
-                        <Route path="/signin"                                                                                                      element={<SigninScreen/>}                                        />
-                        <Route path="/register"                                                                                                    element={<RegisterScreen/>}                                      />
-                        <Route path="/shipping"                                                                                                    element={<ShippingAddressScreen/>}                               />
-                        <Route path="/payment"                                                                                                     element={<PaymentMethodScreen/>}                                 />
-                        <Route path="/placeorder"                                                                                                  element={<PlaceOrderScreen/>}                                    />
-                        <Route path="/order/:id"                                                                                                   element={<OrderScreen/>}                                         />
-                        <Route path="/orderhistory"                                                                                                element={<OrderHistoryScreen/>}                                  />
-                        <Route path="/search/name"                                                                                                 element={<SearchScreen/>}                                  exact />
-                        <Route path="/search/name/:name"                                                                                          element={<SearchScreen/>}                                   exact />
-                        <Route path="/search/category/:category"                                                                                   element={<SearchScreen/>}                                  exact />
-                        <Route path="/search/category/:category/name/:name"                                                                        element={<SearchScreen/>}                                  exact />
-                        <Route path="/search/category/:category/name/:name/min/:min/max/:max"                                                      element={<SearchScreen/>}                                  exact />
-                        <Route path="/search/category/:category/name/:name/min/:min/max/:max/rating/:rating"                                       element={<SearchScreen/>}                                  exact />
-                        <Route path="/search/category/:category/name/:name/min/:min/max/:max/rating/:rating/order/:order/pageNumber/:pageNumber"   element={<SearchScreen/>}                                  exact />
-                        <Route path='/profile'                                                                                                     element={<PrivateRoute><ProfileScreen/></PrivateRoute>}          />
-                        <Route path='/map'                                                                                                         element={<PrivateRoute><MapScreen/></PrivateRoute>}              />
-                        <Route path='/support'                                                                                                     element={<AdminRoute><SupportScreen/></AdminRoute>}              />
-                        <Route path='/dashboard'                                                                                                   element={<AdminRoute><DashboardScreen/></AdminRoute>}            />
-                        <Route path='/userlist/pageNumber/:pageNumber'                                                                             element={<AdminRoute><UserListScreen/></AdminRoute>}             />
-                        <Route path='/user/:id/edit'                                                                                               element={<AdminRoute><UserEditScreen/></AdminRoute>}       exact />
-                        <Route path='/productlist/pageNumber/:pageNumber'                                                                          element={<AdminRoute><ProductListScreen/></AdminRoute>}          />
-                        <Route path='/orderlist/pageNumber/:pageNumber'                                                                            element={<AdminRoute><OrderListScreen/></AdminRoute>}            />
-                        <Route path='/product/:id/edit'                                                                                            element={<AdminRoute><ProductEditScreen/></AdminRoute>}    exact />
-                        <Route path="/"                                                                                                            element={<HomeScreen/>}                                    exact />
+                        <Route path="/cart"                                                                                                                    element={<CartScreen/>}                                />
+                        <Route path="/cart/:id"                                                                                                                element={<CartScreen/>}                                />
+                        <Route path="/product/:id"                                                                                                             element={<ProductScreen/>}                       exact />
+                        <Route path="/signin"                                                                                                                  element={<SigninScreen/>}                              />
+                        <Route path="/register"                                                                                                                element={<RegisterScreen/>}                            />
+                        <Route path="/shipping"                                                                                                                element={<ShippingAddressScreen/>}                     />
+                        <Route path="/payment"                                                                                                                 element={<PaymentMethodScreen/>}                       />
+                        <Route path="/placeorder"                                                                                                              element={<PlaceOrderScreen/>}                          />
+                        <Route path="/order/:id"                                                                                                               element={<OrderScreen/>}                               />
+                        <Route path="/orderhistory"                                                                                                            element={<OrderHistoryScreen/>}                        />
+                        <Route path="/search/name"                                                                                                             element={<SearchScreen/>}                        exact />
+                        <Route path="/search/name/:name"                                                                                                       element={<SearchScreen/>}                        exact />
+                        <Route path="/search/category/:category"                                                                                               element={<SearchScreen/>}                        exact />
+                        <Route path="/search/brand/:brand"                                                                                                     element={<SearchScreen/>}                        exact />
+                        <Route path="/search/category/:category/brand/:brand/name/:name"                                                                       element={<SearchScreen/>}                        exact />
+                        <Route path="/search/category/:category/brand/:brand/name/:name/min/:min/max/:max"                                                     element={<SearchScreen/>}                        exact />
+                        <Route path="/search/category/:category/brand/:brand/name/:name/min/:min/max/:max/rating/:rating"                                      element={<SearchScreen/>}                        exact />
+                        <Route path="/search/category/:category/brand/:brand/name/:name/min/:min/max/:max/rating/:rating/order/:order/pageNumber/:pageNumber"  element={<SearchScreen/>}                        exact />
+                        <Route path='/profile'                                                                                                                 element={<Private><ProfileScreen/></Private>}          />
+                        <Route path='/map'                                                                                                                     element={<Private><MapScreen/></Private>}              />
+                        <Route path='/support'                                                                                                                 element={<Admin><SupportScreen/></Admin>}              />
+                        <Route path='/dashboard'                                                                                                               element={<Admin><DashboardScreen/></Admin>}            />
+                        <Route path='/userlist/pageNumber/:pageNumber'                                                                                         element={<Admin><UserListScreen/></Admin>}             />
+                        <Route path='/user/:id/edit'                                                                                                           element={<Admin><UserEditScreen/></Admin>}       exact />
+                        <Route path='/productlist/pageNumber/:pageNumber'                                                                                      element={<Admin><ProductListScreen/></Admin>}          />
+                        <Route path='/orderlist/pageNumber/:pageNumber'                                                                                        element={<Admin><OrderListScreen/></Admin>}            />
+                        <Route path='/product/:id/edit'                                                                                                        element={<Admin><ProductEditScreen/></Admin>}    exact />
+                        <Route path="/"                                                                                                                        element={<HomeScreen/>}                          exact />
                     </Routes>
                 </main>
                 <footer className="row center">
                     {userInfo && !userInfo.isAdmin && <ChatBox userInfo={userInfo} />}
-                    <div>All right reserved</div>{' '}
+                    <p>Copyright <i className={"fa fa-copyright"}/> 2021-2022 CHTQ, Inc - All Right Reserved</p>
                 </footer>
             </div>
         </BrowserRouter>

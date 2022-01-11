@@ -76,6 +76,7 @@ li {
 input,
 select,
 textarea,
+datalist,
 button {
   padding: 1rem;
   border-radius: 0.5rem;
@@ -91,9 +92,14 @@ button {
   cursor: pointer;
 }
 
+input:read-only{
+  background-color: #e0e0f0;
+}
+
 input:hover,
 select:hover,
 textarea:hover,
+datalist:hover,
 button:hover {
   border: 0.1rem #404040 solid;
 }
@@ -303,6 +309,7 @@ img.large {
 .form label {
   margin: 1rem 0;
 }
+
 
 /* Dropdown */
 .dropdown {
