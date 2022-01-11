@@ -13,27 +13,31 @@ export const getStorage = (storage) => {
  * @param {function} dispatch to dispatch an action
  * @param {string} method to identify request type
  * @param {string} url url to the API route
- * @param {object} req_data data that send to API
- * @param {object} header header that send to API
  * @param {string} requestConstant action type for requesting
  * @param {string} successConstant action type for successful request
  * @param {string} failConstant action type for failure request
+ * @param {option} option contain all optional request body/header or second dispatch
  */
-export const fetching = async (dispatch, method, url, req_data,
-                               header, requestConstant, successConstant,
-                               failConstant, secondDispatch=false, secondConstant='',
-                                store=false, storeName='') => {
+export const fetching = async (dispatch, method, url, requestConstant, successConstant, failConstant,
+                               option={
+                                               sendData:{},
+                                               header:{},
+                                               secondDispatch:false,
+                                               secondConstant:'',
+                                               store:false,
+                                               storeName:''
+                                            }) => {
     dispatch({
         type: requestConstant,
-        payload: req_data,
+        payload: option.sendData,
     });
     try{
         //const { data } = await Axios.get(url);
         const {data} = await axios({
             method: method,
             url: url,
-            data: req_data,
-            headers: header,
+            data: option.sendData,
+            headers: option.header,
         })
 
         dispatch({
@@ -41,15 +45,15 @@ export const fetching = async (dispatch, method, url, req_data,
             payload:    data
         })
 
-        if(secondDispatch){
+        if(option.secondDispatch){
             dispatch({
-                type:       secondConstant,
+                type:       option.secondConstant,
                 payload:    data
             })
         }
 
-        if(store){
-            localStorage.setItem(storeName, JSON.stringify(data));
+        if(option.store){
+            localStorage.setItem(option.storeName, JSON.stringify(data));
         }
     }
     catch(error){
