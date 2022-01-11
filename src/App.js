@@ -3,9 +3,8 @@ import { BrowserRouter, Route, Link, Routes} from "react-router-dom";
 import ProductScreen from "./screens/ProductScreen";
 import HomeScreen from "./screens/HomeScreen";
 import CartScreen from "./screens/CartScreen";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import SigninScreen from "./screens/SigninScreen";
-import { signout } from "./actions/userAction";
 import RegisterScreen from "./screens/RegisterScreen";
 import ShippingAddressScreen from "./screens/ShippingAddressScreen";
 import PaymentMethodScreen from "./screens/PaymentMethodScreen";
@@ -20,121 +19,28 @@ import ProductEditScreen from "./screens/ProductEditScreen";
 import OrderListScreen from "./screens/OrderListScreen";
 import UserListScreen from "./screens/UserListScreen";
 import UserEditScreen from "./screens/UserEditScreen";
-import SearchBox from "./components/SearchBox";
 import SearchScreen from "./screens/SearchScreen";
 import MapScreen from "./screens/MapScreen";
 import DashboardScreen from "./screens/DashboardScreen";
 import SupportScreen from "./screens/SupportScreen";
 import ChatBox from "./components/ChatBox";
 import SideBar from "./components/SideBar";
+import Header from "./components/Header";
 
 function App() {
 
-    const cart = useSelector(state => state.cart);
-    const {cartItems} = cart;
     const userSignin = useSelector((state) => state.userSignin);
     const {userInfo} = userSignin;
 
     const [sidebarIsOpen, setSidebarIsOpen] = useState(false);
 
-    const dispatch = useDispatch()
 
-    const signoutHandler = () => {
-        dispatch(signout())
-    }
 
     return (
         <BrowserRouter>
             <div className="grid-container">
                 <header className="row">
-                    <div>
-                        <button
-                            type="button"
-                            className="open-sidebar"
-                            onClick={() => setSidebarIsOpen(true)}
-                        >
-                            <i className="fa fa-bars" />
-                        </button>
-                        <Link className="brand" to="/">
-                            CHTQ Shopping
-                        </Link>
-                    </div>
-                    <div>
-                        <SearchBox />
-                    </div>
-                    <div>
-                        <Link to="/cart">
-                            Cart
-                            {cartItems.length > 0 && (
-                                <span className="badge">{cartItems.length}</span>
-                            )}
-                        </Link>
-                        {
-                            userInfo ? (
-                                <div className="dropdown">
-                                    <Link to="#">
-                                        {userInfo.name} <i className="fa fa-caret-down"></i>{' '}
-                                    </Link>
-                                    <ul className="dropdown-content">
-                                        <li>
-                                            <Link to='/profile'>
-                                                User Profile
-                                            </Link>
-                                        </li>
-                                        <li>
-                                            <Link to='/orderhistory'>
-                                                Order History
-                                            </Link>
-                                        </li>
-                                        <li>
-                                            <Link to="#signout" onClick={signoutHandler}>
-                                                Sign Out
-                                            </Link>
-                                        </li>
-                                    </ul>
-                                </div>
-
-                            ) : (
-                                <Link to="/signin">Sign In</Link>
-                            )
-                        }
-                        {
-                            userInfo && userInfo.isAdmin && (
-                                <div className="dropdown">
-                                    <Link to="#admin">
-                                        Admin <i className="fa fa-caret-down" />
-                                    </Link>
-                                    <ul className="dropdown-content">
-                                        <li>
-                                            <Link to="/dashboard">
-                                                Dashboard
-                                            </Link>
-                                        </li>
-                                        <li>
-                                            <Link to="/productlist/pageNumber/1">
-                                                Products
-                                            </Link>
-                                        </li>
-                                        <li>
-                                            <Link to="/orderlist/pageNumber/1">
-                                                Orders
-                                            </Link>
-                                        </li>
-                                        <li>
-                                            <Link to="/userlist/pageNumber/1">
-                                                Users
-                                            </Link>
-                                        </li>
-                                        <li>
-                                            <Link to="/support">
-                                                Support
-                                            </Link>
-                                        </li>
-                                    </ul>
-                                </div>
-                            )
-                        }
-                    </div>
+                    <Header openSideBar={open => setSidebarIsOpen(open)} />
                 </header>
                 <SideBar
                     open={sidebarIsOpen}
