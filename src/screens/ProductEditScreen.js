@@ -25,6 +25,12 @@ export default function ProductEditScreen(props) {
     const productUpdate = useSelector(state => state.productUpdate);
     const {loading: loadingUpdate, error: errorUpdate, success: successUpdate } = productUpdate;
 
+    const productCategoryList = useSelector(state => state.productCategoryList);
+    const {categories} = productCategoryList;
+
+    const productBrandList = useSelector(state => state.productBrandList);
+    const {brands} = productBrandList;
+
     const dispatch = useDispatch();
 
     useEffect(() => {
@@ -125,8 +131,8 @@ export default function ProductEditScreen(props) {
                                 id='image' 
                                 type='text' 
                                 placeholder="Enter image" 
-                                value={image} 
-                                onChange={(e) => setImage(e.target.value)}                                 
+                                value={image}
+                                readOnly={true}
                             />
                         </div>
                         <div>
@@ -143,22 +149,38 @@ export default function ProductEditScreen(props) {
                         <div>
                             <label htmlFor='category'>Category</label>
                             <input 
-                                id='category' 
+                                id='category'
+                                list='categories'
                                 type='text' 
                                 placeholder="Enter category" 
                                 value={category} 
                                 onChange={(e) => setCategory(e.target.value)}                                 
                             />
+                            <datalist id='categories'>
+                                {
+                                    categories.map((c) => (
+                                        <option value={c} />
+                                    ))
+                                }
+                            </datalist>
                         </div>
                         <div>
                             <label htmlFor='brand'>Brand</label>
-                            <input 
-                                id='brand' 
+                            <input
+                                id='brand'
+                                list='brands'
                                 type='text' 
                                 placeholder="Enter brand" 
                                 value={brand} 
                                 onChange={(e) => setBrand(e.target.value)}                                 
                             />
+                            <datalist id='brands'>
+                                {
+                                    brands.map((b) => (
+                                        <option value={b} />
+                                    ))
+                                }
+                            </datalist>
                         </div>
                         <div>
                             <label htmlFor='countInStock'>Count In Stock</label>

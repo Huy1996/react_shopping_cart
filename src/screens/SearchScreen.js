@@ -12,37 +12,43 @@ import { useNavigate } from 'react-router-dom';
 export default function SearchScreen(props) {
     const navigate = useNavigate();
     
-    const {name = 'all', category='all', min=0, max=0, rating=0, order='newest', pageNumber=1} = useParams();
+    const {name = 'all', category='all', brand='all', min=0, max=0, rating=0, order='newest', pageNumber=1} = useParams();
     const dispatch = useDispatch()
+
     const productList = useSelector(state => state.productList);
     const {loading, error, products, page, pages} = productList;
 
     const productCategoryList = useSelector(state => state.productCategoryList);
     const {loading: loadingCategory, error: errorCategory, categories } = productCategoryList;
 
+    const productBrandList = useSelector(state => state.productBrandList);
+    const {loading: loadingBrand, error: errorBrand, brands } = productBrandList;
+
     useEffect(() => {
         dispatch(
           listProducts({
             pageNumber,
-            name: name !== 'all' ? name : '',
-            category: category !== 'all' ? category : '',
+            name:       name !== 'all'      ? name      : '',
+            category:   category !== 'all'  ? category  : '',
+            brand:      brand !== 'all'     ? brand  : '',
             min, 
             max,
             rating,
             order,
           })
         );
-      }, [category, dispatch, name, min, max, rating, order, pageNumber]);
+      }, [category, dispatch, name, min, max, rating, order, pageNumber, brand]);
 
     const getFilterUrl = (filter) => {
-        const filterPage        = filter.page || pageNumber;
-        const filterCategory    = filter.category || category;
-        const filterName        = filter.name || name;
+        const filterPage        = filter.page       || pageNumber;
+        const filterCategory    = filter.category   || category;
+        const filterBrand       = filter.brand      || brand;
+        const filterName        = filter.name       || name;
         const filterMin         = filter.min ? filter.min : filter.min === 0 ? 0 : min;
-        const filterMax         = filter.max || max;
-        const filterRating      = filter.rating || rating;
-        const sortOrder         = filter.order || order;
-        return `/search/category/${filterCategory}/name/${filterName}/min/${filterMin}/max/${filterMax}/rating/${filterRating}/order/${sortOrder}/pageNumber/${filterPage}`;
+        const filterMax         = filter.max        || max;
+        const filterRating      = filter.rating     || rating;
+        const sortOrder         = filter.order      || order;
+        return `/search/category/${filterCategory}/brand/${filterBrand}/name/${filterName}/min/${filterMin}/max/${filterMax}/rating/${filterRating}/order/${sortOrder}/pageNumber/${filterPage}`;
     }
     return (
         <div>
@@ -102,6 +108,36 @@ export default function SearchScreen(props) {
                             </ul>
                         )
                     }
+                    </div>
+                    <h3>Brand</h3>
+                    <div>
+                        {
+                            loadingBrand ? (<LoadingBox />) :
+                                errorBrand ? (<MessageBox variant="danger">{errorBrand}</MessageBox>) :
+                                    (
+                                        <ul>
+                                            <li key='all'>
+                                                <Link
+                                                    className={'all'===brand? 'active': ''}
+                                                    to={getFilterUrl({brand:'all'})}
+                                                >
+                                                    All
+                                                </Link>
+                                            </li>
+                                            {
+                                                brands.map((c) => (
+                                                    <li key={c}>
+                                                        <Link
+                                                            className={c===brand? 'active': ''}
+                                                            to={getFilterUrl({brand:c})}
+                                                        >
+                                                            {c}
+                                                        </Link>
+                                                    </li>
+                                                ))}
+                                        </ul>
+                                    )
+                        }
                     </div>
                     <div>
                         <h3>Price</h3>

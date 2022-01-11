@@ -45,6 +45,27 @@ export const productCategoryListReducer = (state = { loading: true, products: []
     }
 }
 
+export const productBrandListReducer = (state = { loading: true, products: [] }, action) => {
+    switch(action.type){
+        case pc.PRODUCT_BRAND_LIST_REQUEST:
+            return {
+                loading:    true
+            };
+        case pc.PRODUCT_BRAND_LIST_SUCCESS:
+            return {
+                loading:    false,
+                brands:   action.payload
+            };
+        case pc.PRODUCT_BRAND_LIST_FAIL:
+            return {
+                loading:    false,
+                error:      action.payload
+            };
+        default:
+            return state;
+    }
+}
+
 export const productDetailsReducer = (state = { loading: true}, action) => {
     switch(action.type){
         case pc.PRODUCT_DETAILS_REQUEST:
