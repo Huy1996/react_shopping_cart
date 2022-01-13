@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import { Link, useParams } from 'react-router-dom';
-import { createReview, detailsProduct } from '../actions/productAction';
+import { detailsProduct } from '../actions/productAction';
+import { createReview } from "../actions/reviewAction";
 import LoadingBox from '../components/LoadingBox';
 import MessageBox from '../components/MessageBox';
 import Rating from '../components/Rating';
-import { PRODUCT_REVIEW_CREATE_RESET } from '../constants/productConstant';
+import { REVIEW_CREATE_RESET } from '../constants/reviewConstant.js';
 import { useNavigate } from 'react-router-dom';
 import Review from "../components/Review";
 import ReviewEditor from "../components/ReviewEditor";
@@ -30,10 +31,16 @@ export default function ProductScreen(props) {
     const productDetails            = useSelector(state => state.productDetails);
     const {loading, error, product} = productDetails;
 
+    const reviewDelete              = useSelector(state => state.reviewDelete);
+    const {success: successDelete} = reviewDelete;
+
+    const reviewUpdate              = useSelector(state => state.reviewUpdate);
+    const {success: successUpdate} = reviewUpdate;
 
 
-    const productReviewCreate       = useSelector(state => state.productReviewCreate);
-    const {loading:loadingReviewCreate, error:errorReviewCreate, success: successReviewCreate} = productReviewCreate;
+
+    const reviewCreate       = useSelector(state => state.reviewCreate);
+    const {loading:loadingReviewCreate, error:errorReviewCreate, success: successReviewCreate} = reviewCreate;
 
 
     useEffect(() => {
@@ -41,12 +48,13 @@ export default function ProductScreen(props) {
             window.alert('Review Submitted Successfully');
             setRating('');
             setComment('');
-            dispatch({
-                type: PRODUCT_REVIEW_CREATE_RESET,
-            })
         }
+        dispatch({
+            type: REVIEW_CREATE_RESET,
+        })
         dispatch(detailsProduct(productId));
-    }, [dispatch, productId, successReviewCreate])
+    }, [dispatch, productId, successReviewCreate, successUpdate, successDelete])
+
 
     const addToCartHandler = () => {
         navigate(`/cart/${productId}?qty=${qty}`)
@@ -56,7 +64,7 @@ export default function ProductScreen(props) {
         // to submit comment
         e.preventDefault();
         if(comment && rating){
-            dispatch(createReview(productId, {rating, comment, name: userInfo.name}))
+            dispatch(createReview(productId, {rating, comment}))
         }
         else{
             alert('Please enter comment and rating')
@@ -167,6 +175,7 @@ export default function ProductScreen(props) {
                                                         rating={rating}
                                                         updateRating={(value) => setRating(value)}
                                                         updateComment={(value) => setComment(value)}
+                                                        button='Submit'
                                                     />
                                                     <div>
                                                         {loadingReviewCreate && (<LoadingBox />)}

@@ -1,13 +1,16 @@
-import React, {useEffect } from 'react'
+import React, {useEffect, useState} from 'react'
 import MessageBox from "./MessageBox";
 import Rating from "./Rating";
 import {useDispatch, useSelector} from "react-redux";
-import {deleteReview, listReviewProduct} from "../actions/reviewAction.js";
+import {createReview, deleteReview, listReviewProduct, updateReview} from "../actions/reviewAction.js";
 import LoadingBox from "./LoadingBox";
-import {deleteProduct} from "../actions/productAction";
+import {REVIEW_DELETE_RESET, REVIEW_UPDATE_RESET} from "../constants/reviewConstant";
+import ReviewEditor from "./ReviewEditor";
 
 export default function Review(props) {
-
+    const [edit, setEdit]           = useState(false);
+    const [rating, setRating]       = useState();
+    const [comment, setComment]     = useState("");
 
     const reviewProductList         = useSelector(state => state.reviewProductList);
     const {loading:loadingReviews, error: errorReviews, reviews} = reviewProductList;
@@ -18,16 +21,28 @@ export default function Review(props) {
     const reviewDelete              = useSelector(state => state.reviewDelete);
     const {loading: loadingDelete, success: successDelete, error: errorDelete} = reviewDelete;
 
+    const reviewUpdate              = useSelector(state => state.reviewUpdate);
+    const {loading: loadingUpdate, success: successUpdate, error: errorUpdate} = reviewUpdate;
+
 
     const dispatch                  = useDispatch();
     useEffect(() => {
         if(successDelete){
             window.alert('Review Deleted Successfully');
+            dispatch({
+                type: REVIEW_DELETE_RESET
+            })
+        }
+        if(successUpdate){
+            window.alert('Review Updated Successfully');
+            setEdit(false)
+            dispatch({
+                type: REVIEW_UPDATE_RESET
+            })
         }
         dispatch(listReviewProduct(props.productId));
         console.log(reviews)
-
-    }, [dispatch, props.productId, successDelete])
+    }, [dispatch, props.productId, successDelete, successUpdate])
 
     const deleteHandler = (review) => {
         if(window.confirm('Are you sure to delele?')){
@@ -35,11 +50,24 @@ export default function Review(props) {
         }
     }
 
+    const submitHandler = (e, reviewId) => {
+        // to submit comment
+        e.preventDefault();
+        if(comment && rating){
+            dispatch(updateReview(reviewId, {rating, comment}))
+        }
+        else{
+            alert('Please enter comment and rating')
+        }
+    };
+
     return (
         <div>
             <h2 id="reviews">Reviews</h2>
             {loadingReviews && <LoadingBox />}
             {errorReviews && <MessageBox variant='danger' >{errorReviews}</MessageBox>}
+            {loadingDelete && <LoadingBox/>}
+            {errorDelete && <MessageBox variant='danger'>{errorDelete}</MessageBox>}
             {reviews ? (reviews.length === 0 ? (<MessageBox>There is no reviews</MessageBox>) :
                 (
                     <ul>
@@ -60,9 +88,11 @@ export default function Review(props) {
                                                     (userInfo._id === review.user._id &&
                                                         (<button type='button'
                                                                  className='small'
+                                                                 onClick={() => setEdit(!edit)}
                                                         >
                                                             <i className="fa fa-edit"/>
-                                                        </button>)) : <></>
+                                                        </button>
+                                                        )) : <></>
                                                 }
                                                 {userInfo ?
                                                     ((userInfo._id === review.user._id || userInfo.isAdmin) &&
@@ -80,8 +110,20 @@ export default function Review(props) {
                                             <Rating rating={review.rating} caption=" "/>
                                             <p>{review.comment}</p>
                                         </div>
-                                        {loadingDelete && <LoadingBox/>}
-                                        {errorDelete && <MessageBox variant='danger'>{errorDelete}</MessageBox>}
+                                        {edit && userInfo._id === review.user._id &&
+                                        <>
+                                            <ReviewEditor
+                                                submitHandler={(e) => submitHandler(e, review._id)}
+                                                title="Edit your review"
+                                                rating={rating}
+                                                updateRating={(value) => setRating(value)}
+                                                updateComment={(value) => setComment(value)}
+                                                button='Edit'
+                                            />
+                                            {loadingUpdate && <LoadingBox/>}
+                                            {errorUpdate && <MessageBox variant='danger'>{errorUpdate}</MessageBox>}
+                                        </>
+                                        }
                                     </div>
                                     <div className="col-2"></div>
                                 </div>

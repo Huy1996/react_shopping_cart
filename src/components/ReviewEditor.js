@@ -19,7 +19,7 @@ export default function ReviewEditor(props) {
                     <option value="2">2 - Fair</option>
                     <option value="3">3 - Good</option>
                     <option value="4">4 - Very good</option>
-                    <option value="5">5 - Excelent</option>
+                    <option value="5">5 - Excellent</option>
                 </select>
             </div>
             <div>
@@ -36,7 +36,7 @@ export default function ReviewEditor(props) {
                     className='primary'
                     type='submit'
                 >
-                    Submit
+                    {props.button}
                 </button>
             </div>
         </form>

@@ -29,3 +29,37 @@ export const deleteReview = (reviewId) => async (dispatch, getState) => {
         }
     );
 }
+
+export const createReview = (productId, review) => async (dispatch, getState) => {
+    const { userSignin:{userInfo} } = getState();
+    const url = `/api/reviews/${productId}`;
+    await fetching(
+        dispatch,
+        method.POST,
+        url,
+        rc.REVIEW_CREATE_REQUEST,
+        rc.REVIEW_CREATE_SUCCESS,
+        rc.REVIEW_CREATE_FAIL,
+        {
+            sendData: review,
+            header: {Authorization: `Bearer ${userInfo.token}`}
+        }
+    );
+}
+
+export const updateReview = (reviewId, review) => async (dispatch, getState) => {
+    const { userSignin:{userInfo} } = getState();
+    const url = `/api/reviews/${reviewId}`;
+    await fetching(
+        dispatch,
+        method.PUT,
+        url,
+        rc.REVIEW_UPDATE_REQUEST,
+        rc.REVIEW_UPDATE_SUCCESS,
+        rc.REVIEW_UPDATE_FAIL,
+        {
+            sendData: review,
+            header: {Authorization: `Bearer ${userInfo.token}`}
+        }
+    );
+}

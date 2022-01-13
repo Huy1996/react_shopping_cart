@@ -27,7 +27,12 @@ import {
     orderListReducer,
     orderPayReducer, orderSumaryReducer
 } from "./reducers/orderReducer";
-import {reviewDeleteReducer, reviewProductListReducer} from "./reducers/reviewReducer";
+import {
+    reviewCreateReducer,
+    reviewDeleteReducer,
+    reviewProductListReducer,
+    reviewUpdateReducer
+} from "./reducers/reviewReducer";
 
 const initialState = {
     userSignin: {
@@ -50,6 +55,8 @@ const reducer = combineReducers({
     productBrandList:       productBrandListReducer,
     productReviewCreate:    productReviewCreateReducer,
     reviewProductList:      reviewProductListReducer,
+    reviewCreate:           reviewCreateReducer,
+    reviewUpdate:           reviewUpdateReducer,
     reviewDelete:           reviewDeleteReducer,
     cart:                   cartReducers,
     userSignin:             userSigninReducer,

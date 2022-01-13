@@ -37,6 +37,54 @@ export const reviewDeleteReducer = (state={loading:false}, action) => {
                 loading: false,
                 error: action.payload,
             };
+        case rc.REVIEW_DELETE_RESET:
+            return {};
+        default:
+            return state;
+    }
+}
+
+export const reviewCreateReducer = (state={loading: false}, action) => {
+    switch (action.type) {
+        case rc.REVIEW_CREATE_REQUEST:
+            return {
+                loading: true
+            };
+        case rc.REVIEW_CREATE_SUCCESS:
+            return {
+                loading: false,
+                success: true,
+            };
+        case rc.REVIEW_CREATE_FAIL:
+            return {
+                loading: false,
+                error: action.payload,
+            };
+        case rc.REVIEW_CREATE_RESET:
+            return {};
+        default:
+            return state;
+    }
+}
+
+export const reviewUpdateReducer = (state={loading: false}, action) => {
+    switch (action.type) {
+        case rc.REVIEW_UPDATE_REQUEST:
+            return {
+                loading: true
+            };
+        case rc.REVIEW_UPDATE_SUCCESS:
+            return {
+                loading: false,
+                success: true,
+            };
+        case rc.REVIEW_UPDATE_FAIL:
+            return {
+                loading: false,
+                error: action.payload,
+            };
+        case rc.REVIEW_UPDATE_RESET:
+            return {};
         default:
             return state;
     }
