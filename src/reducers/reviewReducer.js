@@ -20,3 +20,24 @@ export const reviewProductListReducer = (state = {loading:true, reviews:[]}, act
             return state;
     }
 }
+
+export const reviewDeleteReducer = (state={loading:false}, action) => {
+    switch (action.type){
+        case rc.REVIEW_DELETE_REQUEST:
+            return{
+                loading: true
+            };
+        case rc.REVIEW_DELETE_SUCCESS:
+            return {
+                loading: false,
+                success: true,
+            };
+        case rc.REVIEW_DELETE_FAIL:
+            return {
+                loading: false,
+                error: action.payload,
+            };
+        default:
+            return state;
+    }
+}

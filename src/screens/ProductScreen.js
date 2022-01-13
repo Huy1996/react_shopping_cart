@@ -9,12 +9,10 @@ import { PRODUCT_REVIEW_CREATE_RESET } from '../constants/productConstant';
 import { useNavigate } from 'react-router-dom';
 import Review from "../components/Review";
 import ReviewEditor from "../components/ReviewEditor";
-import {listReviewProduct} from "../actions/reviewAction";
-// import Review from "../components/Review";
 
 export default function ProductScreen(props) {
-    const params = useParams();
-    const navigate = useNavigate();
+    const params                    = useParams();
+    const navigate                  = useNavigate();
     const dispatch                  = useDispatch();
     const { id: productId }         = params;
 
@@ -32,8 +30,7 @@ export default function ProductScreen(props) {
     const productDetails            = useSelector(state => state.productDetails);
     const {loading, error, product} = productDetails;
 
-    const reviewProductList         = useSelector(state => state.reviewProductList);
-    const {loading:loadingReviews, error: errorReviews, reviews} = reviewProductList;
+
 
     const productReviewCreate       = useSelector(state => state.productReviewCreate);
     const {loading:loadingReviewCreate, error:errorReviewCreate, success: successReviewCreate} = productReviewCreate;
@@ -49,7 +46,6 @@ export default function ProductScreen(props) {
             })
         }
         dispatch(detailsProduct(productId));
-        dispatch(listReviewProduct(productId));
     }, [dispatch, productId, successReviewCreate])
 
     const addToCartHandler = () => {
@@ -159,11 +155,7 @@ export default function ProductScreen(props) {
                                     </div>
                                 </div>
                                 <div>
-                                    {
-                                        loadingReviews ? <LoadingBox /> :
-                                        errorReviews ? <MessageBox variant='danger'>{errorReviews}</MessageBox> :
-                                        <Review reviews={reviews} />
-                                    }
+                                    <Review productId={productId} rreviews={product.reviews}/>
                                     <div className="col row top">
                                         <div className="col-1"></div>
                                         <div className="col-2">

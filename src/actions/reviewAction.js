@@ -13,3 +13,19 @@ export const listReviewProduct = (productId) => async (dispatch) => {
         rc.REVIEW_PRODUCT_LIST_FAIL
     );
 }
+
+export const deleteReview = (reviewId) => async (dispatch, getState) => {
+    const { userSignin:{userInfo} } = getState();
+    const url = `/api/reviews/${reviewId}`;
+    await fetching(
+        dispatch,
+        method.DELETE,
+        url,
+        rc.REVIEW_DELETE_REQUEST,
+        rc.REVIEW_DELETE_SUCCESS,
+        rc.REVIEW_DELETE_FAIL,
+        {
+            header: {Authorization: `Bearer ${userInfo.token}`}
+        }
+    );
+}

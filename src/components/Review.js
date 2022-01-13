@@ -1,61 +1,96 @@
-import React, { useState } from 'react'
+import React, {useEffect } from 'react'
 import MessageBox from "./MessageBox";
 import Rating from "./Rating";
-import {useSelector} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
+import {deleteReview, listReviewProduct} from "../actions/reviewAction.js";
+import LoadingBox from "./LoadingBox";
+import {deleteProduct} from "../actions/productAction";
 
 export default function Review(props) {
+
+
+    const reviewProductList         = useSelector(state => state.reviewProductList);
+    const {loading:loadingReviews, error: errorReviews, reviews} = reviewProductList;
 
     const userSignin                = useSelector(state => state.userSignin);
     const { userInfo }              = userSignin;
 
+    const reviewDelete              = useSelector(state => state.reviewDelete);
+    const {loading: loadingDelete, success: successDelete, error: errorDelete} = reviewDelete;
+
+
+    const dispatch                  = useDispatch();
+    useEffect(() => {
+        if(successDelete){
+            window.alert('Review Deleted Successfully');
+        }
+        dispatch(listReviewProduct(props.productId));
+        console.log(reviews)
+
+    }, [dispatch, props.productId, successDelete])
+
+    const deleteHandler = (review) => {
+        if(window.confirm('Are you sure to delele?')){
+            dispatch(deleteReview(review._id));
+        }
+    }
+
     return (
         <div>
             <h2 id="reviews">Reviews</h2>
-            {props.reviews.length === 0 && (<MessageBox>There is no reviews</MessageBox>)}
-            <ul>
-                {props.reviews.map((review) => (
-                    <li key={review._id}>
-                        <div className='top row col'>
-                            <div className='col-2'>
-                                <div
-                                    style={{backgroundColor: '#D9D7F1'}}
-                                    className="row"
-                                >
-                                    <div >
-                                        <p ><strong>{review.user.name}</strong> {review.createdAt.substring(0, 10)}</p>
+            {loadingReviews && <LoadingBox />}
+            {errorReviews && <MessageBox variant='danger' >{errorReviews}</MessageBox>}
+            {reviews ? (reviews.length === 0 ? (<MessageBox>There is no reviews</MessageBox>) :
+                (
+                    <ul>
+                        {reviews.map((review) => (
+                            <li key={review._id}>
+                                <div className='top row col'>
+                                    <div className='col-2'>
+                                        <div
+                                            style={{backgroundColor: '#D9D7F1'}}
+                                            className="row"
+                                        >
+                                            <div>
+                                                <p><strong>{review.user.name}</strong> {review.createdAt.substring(0, 10)}
+                                                </p>
+                                            </div>
+                                            <div>
+                                                {userInfo ?
+                                                    (userInfo._id === review.user._id &&
+                                                        (<button type='button'
+                                                                 className='small'
+                                                        >
+                                                            <i className="fa fa-edit"/>
+                                                        </button>)) : <></>
+                                                }
+                                                {userInfo ?
+                                                    ((userInfo._id === review.user._id || userInfo.isAdmin) &&
+                                                        (<button type='button'
+                                                                 className='small'
+                                                                 onClick={() => deleteHandler(review)}
+                                                        >
+                                                            <i className="fa fa-trash"/>
+                                                        </button>))
+                                                    : <></>
+                                                }
+                                            </div>
+                                        </div>
+                                        <div style={{backgroundColor: '#FFFDDE'}}>
+                                            <Rating rating={review.rating} caption=" "/>
+                                            <p>{review.comment}</p>
+                                        </div>
+                                        {loadingDelete && <LoadingBox/>}
+                                        {errorDelete && <MessageBox variant='danger'>{errorDelete}</MessageBox>}
                                     </div>
-                                    <div>
-                                        {userInfo ?
-                                            (userInfo._id === review.user._id &&
-                                                (<button type='button'
-                                                         className='small'
-                                                >
-                                                    <i className="fa fa-edit"/>
-                                                </button>)) : <></>
-                                        }
-                                        {userInfo ?
-                                            ((userInfo._id === review.user._id || userInfo.isAdmin )&&
-                                                (<button type='button'
-                                                         className='small'
-                                                >
-                                                    <i className="fa fa-trash"/>
-                                                </button>))
-                                            : <></>
-                                        }
-                                    </div>
-
+                                    <div className="col-2"></div>
                                 </div>
-                                <div style={{backgroundColor: '#FFFDDE'}}>
-                                    <Rating rating={review.rating} caption=" "/>
-                                    <p>{review.comment}</p>
-                                </div>
-                            </div>
-                            <div className="col-2"></div>
-                        </div>
 
-                    </li>
-                ))}
-            </ul>
+                            </li>
+                        ))}
+                    </ul>
+                )) : <></>
+            }
         </div>
     )
 }
