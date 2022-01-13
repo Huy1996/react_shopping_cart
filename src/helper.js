@@ -20,13 +20,13 @@ export const getStorage = (storage) => {
  */
 export const fetching = async (dispatch, method, url, requestConstant, successConstant, failConstant,
                                option={
-                                               sendData:{},
-                                               header:{},
-                                               secondDispatch:false,
-                                               secondConstant:'',
-                                               store:false,
-                                               storeName:''
-                                            }) => {
+                                           sendData:{},
+                                           header:{},
+                                           secondDispatch:false,
+                                           secondConstant:'',
+                                           store:false,
+                                           storeName:''
+                                        }) => {
     dispatch({
         type: requestConstant,
         payload: option.sendData,
@@ -44,14 +44,14 @@ export const fetching = async (dispatch, method, url, requestConstant, successCo
             type:       successConstant,
             payload:    data
         })
-
+        // Handle second dispatch if applicable
         if(option.secondDispatch){
             dispatch({
                 type:       option.secondConstant,
                 payload:    data
             })
         }
-
+        // Handle store request to local storage
         if(option.store){
             localStorage.setItem(option.storeName, JSON.stringify(data));
         }
@@ -67,6 +67,7 @@ export const fetching = async (dispatch, method, url, requestConstant, successCo
     }
 }
 
+// Price range
 export const prices = [
     {
         name:'Any',
@@ -90,6 +91,7 @@ export const prices = [
     }
 ];
 
+// Rating range
 export const ratings = [
     {
         name:'4 stars & up',

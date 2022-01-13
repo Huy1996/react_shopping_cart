@@ -32,7 +32,7 @@ export default function SideBar(props) {
                 >
                     <i className="fa fa-close" />
                 </button>
-                <h2></h2>
+                <label />
                 <li>
                     <strong>Categories</strong>
                 </li>
