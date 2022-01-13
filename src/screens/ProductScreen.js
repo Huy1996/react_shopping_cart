@@ -7,6 +7,9 @@ import MessageBox from '../components/MessageBox';
 import Rating from '../components/Rating';
 import { PRODUCT_REVIEW_CREATE_RESET } from '../constants/productConstant';
 import { useNavigate } from 'react-router-dom';
+import Review from "../components/Review";
+import ReviewEditor from "../components/ReviewEditor";
+import {listReviewProduct} from "../actions/reviewAction";
 // import Review from "../components/Review";
 
 export default function ProductScreen(props) {
@@ -14,17 +17,27 @@ export default function ProductScreen(props) {
     const navigate = useNavigate();
     const dispatch                  = useDispatch();
     const { id: productId }         = params;
+
+
     // Creating Hook
     const [qty, setQty]             = useState(1);
     const [rating, setRating]       = useState(0);
     const [comment, setComment]     = useState("");
+
+
     // Access store
     const userSignin                = useSelector(state => state.userSignin);
     const { userInfo }              = userSignin;
-    const productDetails            = useSelector((state)=> state.productDetails);
+
+    const productDetails            = useSelector(state => state.productDetails);
     const {loading, error, product} = productDetails;
+
+    const reviewProductList         = useSelector(state => state.reviewProductList);
+    const {loading:loadingReviews, error: errorReviews, reviews} = reviewProductList;
+
     const productReviewCreate       = useSelector(state => state.productReviewCreate);
     const {loading:loadingReviewCreate, error:errorReviewCreate, success: successReviewCreate} = productReviewCreate;
+
 
     useEffect(() => {
         if(successReviewCreate){
@@ -36,6 +49,7 @@ export default function ProductScreen(props) {
             })
         }
         dispatch(detailsProduct(productId));
+        dispatch(listReviewProduct(productId));
     }, [dispatch, productId, successReviewCreate])
 
     const addToCartHandler = () => {
@@ -145,67 +159,36 @@ export default function ProductScreen(props) {
                                     </div>
                                 </div>
                                 <div>
-                                    <h2 id="reviews">Reviews</h2>
-                                    {product.reviews.length === 0 && (<MessageBox>There is no reviews</MessageBox>)}
-                                    <ul>
-                                        {product.reviews.map((review) => (
-                                            <li key={review._id}>
-                                                <strong>{review.name}</strong>
-                                                <Rating rating={review.rating} caption=" "/>
-                                                <p>{review.createdAt.substring(0, 10)}</p>
-                                                <p>{review.comment}</p>
-                                            </li>
-                                        ))}
-                                        <li>
+                                    {
+                                        loadingReviews ? <LoadingBox /> :
+                                        errorReviews ? <MessageBox variant='danger'>{errorReviews}</MessageBox> :
+                                        <Review reviews={reviews} />
+                                    }
+                                    <div className="col row top">
+                                        <div className="col-1"></div>
+                                        <div className="col-2">
                                             {userInfo ? (
-                                                <form className='form' onSubmit={submitHandler}>
-                                                    <div>
-                                                        <h2>Write a customer review</h2>
-                                                    </div>
-                                                    <div>
-                                                        <label htmlFor="rating">Rating</label>
-                                                        <select
-                                                            id="rating"
-                                                            value={rating}
-                                                            onChange={(e) => setRating(e.target.value)}
-                                                        >
-                                                            <option value="">Select...</option>
-                                                            <option value="1">1 - Poor</option>
-                                                            <option value="2">2 - Fair</option>
-                                                            <option value="3">3 - Good</option>
-                                                            <option value="4">4 - Very good</option>
-                                                            <option value="5">5 - Excelent</option>
-                                                        </select>
-                                                    </div>
-                                                    <div>
-                                                        <label htmlFor='comment'>Comment</label>
-                                                        <textarea
-                                                            id="comment"
-                                                            value={comment}
-                                                            onChange={(e) => setComment(e.target.value)}
-                                                        />
-                                                    </div>
-                                                    <div>
-                                                        <label />
-                                                        <button
-                                                            className='primary'
-                                                            type='submit'
-                                                        >
-                                                            Submit
-                                                        </button>
-                                                    </div>
+                                                <>
+                                                    <ReviewEditor
+                                                        submitHandler={(e) => submitHandler(e)}
+                                                        title="Write a customer review"
+                                                        rating={rating}
+                                                        updateRating={(value) => setRating(value)}
+                                                        updateComment={(value) => setComment(value)}
+                                                    />
                                                     <div>
                                                         {loadingReviewCreate && (<LoadingBox />)}
                                                         {errorReviewCreate && (<MessageBox variant="danger">{errorReviewCreate}</MessageBox>)}
                                                     </div>
-                                                </form>
+                                                </>
                                             ) : (
                                                 <MessageBox>
                                                     Please <Link to="/signin">Sign In</Link> to write a review
                                                 </MessageBox>
                                             )}
-                                        </li>
-                                    </ul>
+                                        </div>
+                                        <div className="col-1"></div>
+                                    </div>
                                 </div>
                             </div>
                         )
@@ -280,4 +263,50 @@ export default function ProductScreen(props) {
                                         </li>
                                     </ul>
                                 </div>
+ */
+
+/*
+
+<form className='form' onSubmit={submitHandler}>
+                                                    <div>
+                                                        <h2>Write a customer review</h2>
+                                                    </div>
+                                                    <div>
+                                                        <label htmlFor="rating">Rating</label>
+                                                        <select
+                                                            id="rating"
+                                                            value={rating}
+                                                            onChange={(e) => setRating(e.target.value)}
+                                                        >
+                                                            <option value="">Select...</option>
+                                                            <option value="1">1 - Poor</option>
+                                                            <option value="2">2 - Fair</option>
+                                                            <option value="3">3 - Good</option>
+                                                            <option value="4">4 - Very good</option>
+                                                            <option value="5">5 - Excelent</option>
+                                                        </select>
+                                                    </div>
+                                                    <div>
+                                                        <label htmlFor='comment'>Comment</label>
+                                                        <textarea
+                                                            id="comment"
+                                                            value={comment}
+                                                            onChange={(e) => setComment(e.target.value)}
+                                                        />
+                                                    </div>
+                                                    <div>
+                                                        <label />
+                                                        <button
+                                                            className='primary'
+                                                            type='submit'
+                                                        >
+                                                            Submit
+                                                        </button>
+                                                    </div>
+                                                    <div>
+                                                        {loadingReviewCreate && (<LoadingBox />)}
+                                                        {errorReviewCreate && (<MessageBox variant="danger">{errorReviewCreate}</MessageBox>)}
+                                                    </div>
+                                                </form>
+
  */

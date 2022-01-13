@@ -1,0 +1,35 @@
+## 1/12/2022
+### Review component
+- [ ] Create independent for review list render
+  - [x] Create React conponent for review list
+  - [ ] Create edit review function
+  - [ ] Create delete review function
+  - [x] Render edit/delete button base on user information
+  - [ ] Handle click on button
+- [x] Create independent for post/edit review
+- [x] Update/modify Review Route im backend
+- [x] Add view review by product feature
+  - [x] Create ReviewProduct constant
+  - [x] Create listReviewProduct function
+  - [x] Create listReviewProduct Reducer
+  - [x] Adding feature to frontend
+- [ ] Add update review feature for user
+  - [ ] Create UpdateReview constant
+  - [ ] Create UpdateReview function
+  - [ ] Create UpdateReview Reducer
+  - [ ] Adding feature to frontend
+- [ ] Create customer's Review list feature
+  - [ ] Create listCustomerReview constant
+  - [ ] Create listCustomerReview function
+  - [ ] Create listCustomerReview Reducer
+  - [ ] Adding feature to frontend
+- [ ] Create Admin feature to manage all customer Review
+  - [ ] Create listUserReview constant
+  - [ ] Add view user Button on UserListScreen
+  - [ ] Create listUserReview function
+  - [ ] Create listUserReview reducer
+  - [ ] Create new Screen to render user comment
+  - [ ] Adding feature to frontend
+
+- [ ] 
+- [ ] 

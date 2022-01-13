@@ -1,7 +1,7 @@
 import * as uc from '../constants/userConstant'
 import {fetching} from "../helper";
 import * as method from "../constants/AJAXConstant"
-import {USER_INFO} from "../constants/storageConstant";
+import * as sc from '../constants/storageConstant'
 
 export const signin = (email, password) => async (dispatch) => {
     const url = '/api/users/signin';
@@ -15,7 +15,7 @@ export const signin = (email, password) => async (dispatch) => {
         {
             sendData:   {email, password},
             store:      true,
-            storeName:  USER_INFO
+            storeName:  sc.USER_INFO
         }
     )
 
@@ -35,12 +35,15 @@ export const  register = (name, email, password) => async (dispatch) => {
             secondDispatch: true,
             secondConstant: uc.USER_SIGNIN_SUCCESS,
             store:          true,
-            storeName:      USER_INFO
+            storeName:      sc.USER_INFO
         }
     )
 }
 
 export const signout = () => (dispatch) => {
+    localStorage.removeItem(sc.USER_INFO);
+    localStorage.removeItem(sc.CART_ITEMS);
+    localStorage.removeItem(sc.SHIPPING_ADDRESS);
     dispatch({
         type: uc.USER_SIGNOUT,
     })
@@ -78,7 +81,7 @@ export const updateUserProfile = (user) => async (dispatch, getState) => {
             secondDispatch: true,
             secondConstant: uc.USER_SIGNIN_SUCCESS,
             store:          true,
-            storeName:      USER_INFO
+            storeName:      sc.USER_INFO
         }
     )
 }

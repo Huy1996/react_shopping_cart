@@ -64,14 +64,14 @@ export default function UserListScreen(props) {
                                             className='small'
                                             onClick={() => navigate(`/user/${user._id}/edit`)}
                                         >
-                                            Edit
+                                            <i className="fa fa-edit" />
                                         </button>
                                         <button
                                             type='button'
                                             className='small'
                                             onClick={() => deleteHandler(user)}  
                                         >
-                                            Delete
+                                            <i className="fa fa-trash" />
                                         </button>
                                     </td>
                                 </tr>

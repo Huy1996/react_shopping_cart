@@ -1,40 +1,17 @@
-import React, { useEffect, useState } from "react";
-import { BrowserRouter, Route, Link, Routes} from "react-router-dom";
-import ProductScreen from "./screens/ProductScreen";
-import HomeScreen from "./screens/HomeScreen";
-import CartScreen from "./screens/CartScreen";
+import React, { useState } from "react";
+import { BrowserRouter } from "react-router-dom";
 import { useSelector } from "react-redux";
-import SigninScreen from "./screens/SigninScreen";
-import RegisterScreen from "./screens/RegisterScreen";
-import ShippingAddressScreen from "./screens/ShippingAddressScreen";
-import PaymentMethodScreen from "./screens/PaymentMethodScreen";
-import PlaceOrderScreen from "./screens/PlaceOrderScreen";
-import OrderScreen from "./screens/OrderScreen";
-import OrderHistoryScreen from "./screens/OrderHistoryScreen";
-import ProfileScreen from "./screens/ProfileScreen";
-import Private from "./components/Private";
-import Admin from "./components/Admin";
-import ProductListScreen from "./screens/ProductListScreen";
-import ProductEditScreen from "./screens/ProductEditScreen";
-import OrderListScreen from "./screens/OrderListScreen";
-import UserListScreen from "./screens/UserListScreen";
-import UserEditScreen from "./screens/UserEditScreen";
-import SearchScreen from "./screens/SearchScreen";
-import MapScreen from "./screens/MapScreen";
-import DashboardScreen from "./screens/DashboardScreen";
-import SupportScreen from "./screens/SupportScreen";
 import ChatBox from "./components/ChatBox";
 import SideBar from "./components/SideBar";
 import Header from "./components/Header";
+import ScreenContainer from "./components/ScreenContainer";
 
-function App() {
+export default function App() {
 
     const userSignin = useSelector((state) => state.userSignin);
     const {userInfo} = userSignin;
 
     const [sidebarIsOpen, setSidebarIsOpen] = useState(false);
-
-
 
     return (
         <BrowserRouter>
@@ -47,36 +24,7 @@ function App() {
                     closeSideBar={close => setSidebarIsOpen(close)}
                 />
                 <main>
-                    <Routes>
-                        <Route path="/cart"                                                                                                                    element={<CartScreen/>}                                />
-                        <Route path="/cart/:id"                                                                                                                element={<CartScreen/>}                                />
-                        <Route path="/product/:id"                                                                                                             element={<ProductScreen/>}                       exact />
-                        <Route path="/signin"                                                                                                                  element={<SigninScreen/>}                              />
-                        <Route path="/register"                                                                                                                element={<RegisterScreen/>}                            />
-                        <Route path="/shipping"                                                                                                                element={<ShippingAddressScreen/>}                     />
-                        <Route path="/payment"                                                                                                                 element={<PaymentMethodScreen/>}                       />
-                        <Route path="/placeorder"                                                                                                              element={<PlaceOrderScreen/>}                          />
-                        <Route path="/order/:id"                                                                                                               element={<OrderScreen/>}                               />
-                        <Route path="/orderhistory"                                                                                                            element={<OrderHistoryScreen/>}                        />
-                        <Route path="/search/name"                                                                                                             element={<SearchScreen/>}                        exact />
-                        <Route path="/search/name/:name"                                                                                                       element={<SearchScreen/>}                        exact />
-                        <Route path="/search/category/:category"                                                                                               element={<SearchScreen/>}                        exact />
-                        <Route path="/search/brand/:brand"                                                                                                     element={<SearchScreen/>}                        exact />
-                        <Route path="/search/category/:category/brand/:brand/name/:name"                                                                       element={<SearchScreen/>}                        exact />
-                        <Route path="/search/category/:category/brand/:brand/name/:name/min/:min/max/:max"                                                     element={<SearchScreen/>}                        exact />
-                        <Route path="/search/category/:category/brand/:brand/name/:name/min/:min/max/:max/rating/:rating"                                      element={<SearchScreen/>}                        exact />
-                        <Route path="/search/category/:category/brand/:brand/name/:name/min/:min/max/:max/rating/:rating/order/:order/pageNumber/:pageNumber"  element={<SearchScreen/>}                        exact />
-                        <Route path='/profile'                                                                                                                 element={<Private><ProfileScreen/></Private>}          />
-                        <Route path='/map'                                                                                                                     element={<Private><MapScreen/></Private>}              />
-                        <Route path='/support'                                                                                                                 element={<Admin><SupportScreen/></Admin>}              />
-                        <Route path='/dashboard'                                                                                                               element={<Admin><DashboardScreen/></Admin>}            />
-                        <Route path='/userlist/pageNumber/:pageNumber'                                                                                         element={<Admin><UserListScreen/></Admin>}             />
-                        <Route path='/user/:id/edit'                                                                                                           element={<Admin><UserEditScreen/></Admin>}       exact />
-                        <Route path='/productlist/pageNumber/:pageNumber'                                                                                      element={<Admin><ProductListScreen/></Admin>}          />
-                        <Route path='/orderlist/pageNumber/:pageNumber'                                                                                        element={<Admin><OrderListScreen/></Admin>}            />
-                        <Route path='/product/:id/edit'                                                                                                        element={<Admin><ProductEditScreen/></Admin>}    exact />
-                        <Route path="/"                                                                                                                        element={<HomeScreen/>}                          exact />
-                    </Routes>
+                    <ScreenContainer />
                 </main>
                 <footer className="row center">
                     {userInfo && !userInfo.isAdmin && <ChatBox userInfo={userInfo} />}
@@ -86,5 +34,3 @@ function App() {
         </BrowserRouter>
     );
 }
-
-export default App;

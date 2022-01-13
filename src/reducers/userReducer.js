@@ -1,5 +1,4 @@
 import * as uc from '../constants/userConstant'
-import * as sc from '../constants/storageConstant'
 
 export const userSigninReducer = (state = {}, action) => {
     switch(action.type){
@@ -18,9 +17,6 @@ export const userSigninReducer = (state = {}, action) => {
                 error: action.payload,
             };
         case uc.USER_SIGNOUT:
-            localStorage.removeItem(sc.USER_INFO);
-            localStorage.removeItem(sc.CART_ITEMS);
-            localStorage.removeItem(sc.SHIPPING_ADDRESS);
             return {};
         default:
             return state;

@@ -90,14 +90,14 @@ export default function ProductListScreen(props) {
                                         className='small' 
                                         onClick={() => navigate(`/product/${product._id}/edit`)}
                                     >
-                                        Edit
+                                        <i className="fa fa-edit" />
                                     </button>
                                     <button
                                         type='button'
                                         className='small'
                                         onClick={() => deleteHandler(product)}
                                     >
-                                        Delete
+                                        <i className="fa fa-trash" />
                                     </button>
                                 </td>
                             </tr>
