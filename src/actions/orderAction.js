@@ -20,9 +20,7 @@ export const createOrder = (order) => async(dispatch, getState) => {
             secondConstant: CART_EMPTY
         }
     )
-
 }
-
 
 
 export const detailsOrder = (orderId) => async (dispatch, getState) => {
@@ -100,6 +98,22 @@ export const listOrder = ({pageNumber=''}) => async (dispatch, getState) => {
         oc.ORDER_LIST_REQUEST,
         oc.ORDER_LIST_SUCCESS,
         oc.ORDER_LIST_FAIL,
+        {
+            header: {Authorization: `Bearer ${userInfo.token}`}
+        }
+    )
+}
+
+export const listOrderUser = ({pageNumber='', userId}) => async (dispatch, getState) => {
+    const {userSignin:{userInfo}} = getState();
+    const url = `/api/orders/user/${userId}?pageNumber=${pageNumber}`;
+    await fetching(
+        dispatch,
+        method.GET,
+        url,
+        oc.ORDER_LIST_USER_REQUEST,
+        oc.ORDER_LIST_USER_SUCCESS,
+        oc.ORDER_LIST_USER_FAIL,
         {
             header: {Authorization: `Bearer ${userInfo.token}`}
         }

@@ -44,6 +44,32 @@ export const orderListReducer = (state={orders:[]}, action) => {
     }
 }
 
+export const orderListUserReducer = (state={orders:[]}, action) => {
+    switch(action.type){
+        case oc.ORDER_LIST_USER_REQUEST:
+            return{
+                loading: true
+            };
+        case oc.ORDER_LIST_USER_SUCCESS:
+            return {
+                loading:    false,
+                orders:     action.payload.orders,
+                count:      action.payload.count,
+                pages:      action.payload.pages,
+                page:       action.payload.page,
+            }
+        case oc.ORDER_LIST_USER_FAIL:
+            return {
+                loading: false,
+                orders: action.payload,
+            }
+        case oc.ORDER_LIST_USER_RESET:
+            return {};
+        default:
+            return state;
+    }
+}
+
 export const orderDeleteReducer = (state={}, action) => {
     switch(action.type){
         case oc.ORDER_DELETE_REQUEST:
