@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import { Link, useParams } from 'react-router-dom';
 import { detailsProduct } from '../actions/productAction';
-import { createReview } from "../actions/reviewAction";
+import {createReview, listReviewProduct} from "../actions/reviewAction";
 import LoadingBox from '../components/LoadingBox';
 import MessageBox from '../components/MessageBox';
 import Rating from '../components/Rating';
@@ -31,16 +31,17 @@ export default function ProductScreen(props) {
     const productDetails            = useSelector(state => state.productDetails);
     const {loading, error, product} = productDetails;
 
-    const reviewDelete              = useSelector(state => state.reviewDelete);
-    const {success: successDelete} = reviewDelete;
-
     const reviewUpdate              = useSelector(state => state.reviewUpdate);
     const {success: successUpdate} = reviewUpdate;
 
-
-
     const reviewCreate       = useSelector(state => state.reviewCreate);
     const {loading:loadingReviewCreate, error:errorReviewCreate, success: successReviewCreate} = reviewCreate;
+
+    const reviewProductList         = useSelector(state => state.reviewProductList);
+    const {loading:loadingReviews, error: errorReviews, reviews} = reviewProductList;
+
+    const reviewDelete              = useSelector(state => state.reviewDelete);
+    const {loading: loadingDelete, success: successDelete, error: errorDelete} = reviewDelete;
 
 
     useEffect(() => {
@@ -49,10 +50,12 @@ export default function ProductScreen(props) {
             setRating('');
             setComment('');
         }
+
         dispatch({
             type: REVIEW_CREATE_RESET,
         })
         dispatch(detailsProduct(productId));
+        dispatch(listReviewProduct(productId));
     }, [dispatch, productId, successReviewCreate, successUpdate, successDelete])
 
 
@@ -163,7 +166,23 @@ export default function ProductScreen(props) {
                                     </div>
                                 </div>
                                 <div>
-                                    <Review productId={productId} rreviews={product.reviews}/>
+                                    <h2 id="reviews">Reviews</h2>
+                                    {loadingDelete && <LoadingBox />}
+                                    {errorDelete && <MessageBox variant='danger' >{errorDelete}</MessageBox>}
+                                    {loadingReviews ? <LoadingBox /> :
+                                        errorReviews ? <MessageBox variant='danger' >{errorReviews}</MessageBox> :
+                                            reviews.length === 0 ? <MessageBox>There is no reviews</MessageBox> :
+                                                <ul>
+                                                    {reviews.map((review) => (
+                                                        <li key={review._id}>
+                                                            <div className='top row col'>
+                                                                <Review review={review} name={true}/>
+                                                                <div className="col-2"></div>
+                                                            </div>
+                                                        </li>))}
+                                                </ul>
+
+                                    }
                                     <div className="col row top">
                                         <div className="col-1"></div>
                                         <div className="col-2">
