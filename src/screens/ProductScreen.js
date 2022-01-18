@@ -192,8 +192,7 @@ export default function ProductScreen(props) {
                                                         submitHandler={(e) => submitHandler(e)}
                                                         title="Write a customer review"
                                                         rating={rating}
-                                                        updateRating={(value) => setRating(value)}
-                                                        updateComment={(value) => setComment(value)}
+                                                        updateRating={(value) => setRating(value)} updateComment={(value) => setComment(value)}
                                                         button='Submit'
                                                     />
                                                     <div>
