@@ -101,7 +101,10 @@ export default function UserDashboardScreen(props) {
                                                     Delivered at {order.deliveredAt.substring(0, 10)}
                                                 </MessageBox>
                                             ) : (
-                                                <MessageBox variant="danger">Not Delivered</MessageBox>
+                                                <MessageBox variant="danger">
+                                                    Not Delivered<br />
+                                                    {userInfo.isAdmin && <Link to={`/order/${order._id}`}>Delivery Order Now</Link>}
+                                                </MessageBox>
                                             )}
                                             <h2 />
                                             {order.isPaid ? (
@@ -109,12 +112,10 @@ export default function UserDashboardScreen(props) {
                                                     Paid at {order.paidAt.substring(0, 10)}
                                                 </MessageBox>
                                             ) : (
-                                                <div>
-                                                    <MessageBox variant="danger">
-                                                        Not Paid <Link to={`/order/${order._id}`}>Pay Order Now</Link>
-                                                    </MessageBox>
-
-                                                </div>
+                                                <MessageBox variant="danger">
+                                                    Not Paid<br />
+                                                    {userInfo._id === order.user && <Link to={`/order/${order._id}`}>Pay Order Now</Link>}
+                                                </MessageBox>
                                             )}
                                         </div>
                                         <div className='card cart-body col-2'>
@@ -125,8 +126,6 @@ export default function UserDashboardScreen(props) {
                                             <OrderItem order={order}/>
                                         </div>
                                     </div>
-
-
                     ))}
                 </div>
             </div>

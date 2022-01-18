@@ -35,7 +35,7 @@ export const detailsProduct = (productId) => async (dispatch) => {
                 pc.PRODUCT_DETAILS_FAIL
             );
 }
-
+/*
 export const createProduct = () => async (dispatch, getState) => {
     const { userSignin:{userInfo} } = getState();
     const url = '/api/products';
@@ -48,6 +48,23 @@ export const createProduct = () => async (dispatch, getState) => {
         pc.PRODUCT_CREATE_FAIL,
         {
             header: {Authorization: `Bearer ${userInfo.token}`}
+        }
+    );
+}*/
+
+export const createProduct = (product) => async (dispatch, getState) => {
+    const { userSignin:{userInfo} } = getState();
+    const url = '/api/products';
+    await fetching(
+        dispatch,
+        method.POST,
+        url,
+        pc.PRODUCT_CREATE_REQUEST,
+        pc.PRODUCT_CREATE_SUCCESS,
+        pc.PRODUCT_CREATE_FAIL,
+        {
+            sendData: product,
+            header:   {Authorization: `Bearer ${userInfo.token}`}
         }
     );
 }

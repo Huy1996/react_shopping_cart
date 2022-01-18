@@ -23,6 +23,7 @@ import OrderListScreen from "../screens/OrderListScreen";
 import ProductEditScreen from "../screens/ProductEditScreen";
 import HomeScreen from "../screens/HomeScreen";
 import UserDashboardScreen from "../screens/UserDashboardScreen";
+import ProductCreateScreen from "../screens/ProductCreateScreen";
 
 export default function ScreenContainer(props) {
     return (
@@ -57,6 +58,7 @@ export default function ScreenContainer(props) {
             <Route path='/productlist/pageNumber/:pageNumber'                                                                                      element={<Admin><ProductListScreen/></Admin>}          />
             <Route path='/orderlist/pageNumber/:pageNumber'                                                                                        element={<Admin><OrderListScreen/></Admin>}            />
             <Route path='/product/:id/edit'                                                                                                        element={<Admin><ProductEditScreen/></Admin>}    exact />
+            <Route path='/product/create'                                                                                                          element={<Admin><ProductCreateScreen/></Admin>}        />
             <Route path="/"                                                                                                                        element={<HomeScreen/>}                          exact />
         </Routes>
     );
