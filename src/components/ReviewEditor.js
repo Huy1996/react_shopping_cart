@@ -1,14 +1,14 @@
 import React from 'react';
-
+import Fab from '@mui/material/Fab';
 export default function ReviewEditor(props) {
 
     return (
-        <form className='form' onSubmit={props.submitHandler}>
+        <form className='form-review' onSubmit={props.submitHandler}>
             <div>
                 <h2>{props.title}</h2>
             </div>
             <div>
-                <label htmlFor="rating">Rating</label>
+                <label htmlFor="rating">Rating         </label>{'   '}
                 <select
                     id="rating"
                     value={props.rating}
@@ -32,12 +32,13 @@ export default function ReviewEditor(props) {
             </div>
             <div>
                 <label />
-                <button
+                <Fab
                     className='primary'
+                    size='medium'
                     type='submit'
                 >
                     {props.button}
-                </button>
+                </Fab>
             </div>
         </form>
     );

@@ -24,14 +24,14 @@ import {
     orderDeleteReducer,
     orderDeliverReducer,
     orderListMineReducer,
-    orderListReducer,
+    orderListReducer, orderListUserReducer,
     orderPayReducer, orderSumaryReducer
 } from "./reducers/orderReducer";
 import {
     reviewCreateReducer,
     reviewDeleteReducer,
     reviewProductListReducer,
-    reviewUpdateReducer
+    reviewUpdateReducer, reviewUserListReducer
 } from "./reducers/reviewReducer";
 
 const initialState = {
@@ -55,6 +55,7 @@ const reducer = combineReducers({
     productBrandList:       productBrandListReducer,
     productReviewCreate:    productReviewCreateReducer,
     reviewProductList:      reviewProductListReducer,
+    reviewUserList:         reviewUserListReducer,
     reviewCreate:           reviewCreateReducer,
     reviewUpdate:           reviewUpdateReducer,
     reviewDelete:           reviewDeleteReducer,
@@ -72,6 +73,7 @@ const reducer = combineReducers({
     orderPay:               orderPayReducer,
     orderDeliver:           orderDeliverReducer,
     orderListMine:          orderListMineReducer,
+    orderListUser:          orderListUserReducer,
     orderList:              orderListReducer,
     orderDelete:            orderDeleteReducer,
     orderSummary:           orderSumaryReducer,

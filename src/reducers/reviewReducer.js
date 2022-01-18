@@ -21,6 +21,30 @@ export const reviewProductListReducer = (state = {loading:true, reviews:[]}, act
     }
 }
 
+export const reviewUserListReducer = (state = {loading:true, reviews:[]}, action) => {
+    switch(action.type){
+        case rc.REVIEW_USER_LIST_REQUEST:
+            return{
+                loading: true
+            };
+        case rc.REVIEW_USER_LIST_SUCCESS:
+            return {
+                loading: false,
+                reviews: action.payload.reviews,
+                count: action.payload.count
+            };
+        case rc.REVIEW_USER_LIST_FAIL:
+            return {
+                loading: false,
+                error: action.payload
+            };
+        case rc.REVIEW_USER_LIST_RESET:
+            return {};
+        default:
+            return state;
+    }
+}
+
 export const reviewDeleteReducer = (state={loading:false}, action) => {
     switch (action.type){
         case rc.REVIEW_DELETE_REQUEST:

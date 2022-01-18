@@ -7,6 +7,7 @@ import { deliverOrder, detailsOrder, payOrder } from '../actions/orderAction';
 import LoadingBox from '../components/LoadingBox';
 import MessageBox from '../components/MessageBox';
 import { ORDER_DELIVER_RESET, ORDER_PAY_RESET } from '../constants/orderConstant';
+import OrderItem from "../components/OrderItem";
 
 export default function OrderScreen(props) {
     const params = useParams();
@@ -81,7 +82,7 @@ export default function OrderScreen(props) {
                                 {
                                     order.isDelivered ? (
                                         <MessageBox variant="success">
-                                            Delivered at {order.deliveredAt}
+                                            Delivered at {order.deliveredAt.substring(0, 10)}
                                         </MessageBox>
                                     ) : (
                                         <MessageBox variant="danger">Not Delivered</MessageBox>
@@ -98,7 +99,7 @@ export default function OrderScreen(props) {
                                 {
                                     order.isPaid ? (
                                         <MessageBox variant="success">
-                                            Paid at {order.paidAt}
+                                            Paid at {order.paidAt.substring(0, 10)}
                                         </MessageBox>
                                     ) : (
                                         <MessageBox variant="danger">Not Paid</MessageBox>
@@ -107,34 +108,7 @@ export default function OrderScreen(props) {
                             </div>
                         </li>
                         <li>
-                            <div className='card card-body'>
-                                <h2>Order Items</h2>
-                                <ul>
-                                    {
-                                        order.orderItems.map((item) => (
-                                            <li key={item.product}>
-                                                <div className="row">
-                                                    <div>
-                                                        <img 
-                                                            src={item.image} 
-                                                            alt={item.name}
-                                                            className="small"
-                                                        ></img>                                                
-                                                    </div>
-                                                    <div className='min-30'>
-                                                        <Link to={`/product/${item.product}`}>
-                                                            {item.name}
-                                                        </Link>
-                                                    </div>                                            
-                                                    <div>
-                                                        {item.qty} x ${item.price.toFixed(2)} = ${(item.qty * item.price).toFixed(2)}
-                                                    </div>                                            
-                                                </div>
-                                            </li>
-                                        ))
-                                    }
-                                </ul>
-                            </div>
+                            <OrderItem order={order} />
                         </li>
                     </ul>
                 </div>

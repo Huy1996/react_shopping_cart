@@ -36,7 +36,7 @@ export default function Header(props) {
             </div>
             <div>
                 <Link to="/cart">
-                    Cart
+                    <i className="fas fa-shopping-cart" /> Cart
                     {cartItems.length > 0 && (
                         <span className="badge">{cartItems.length}</span>
                     )}
@@ -45,29 +45,33 @@ export default function Header(props) {
                     userInfo ? (
                         <div className="dropdown">
                             <Link to="#">
-                                {userInfo.name} <i className="fa fa-caret-down"></i>{' '}
+                                {userInfo.name} <i className="fa fa-caret-down" />{' '}
                             </Link>
                             <ul className="dropdown-content">
                                 <li>
+                                    <Link to='/userdashboard'>
+                                        <i className='fas fa-user'/>  Dashboard
+                                    </Link>
+                                </li>
+                                <li>
                                     <Link to='/profile'>
-                                        User Profile
+                                        <i className="fas fa-user-cog" /> User Profile
                                     </Link>
                                 </li>
                                 <li>
                                     <Link to='/orderhistory'>
-                                        Order History
+                                        <i className='fas fa-history'/>  Order History
                                     </Link>
                                 </li>
                                 <li>
                                     <Link to="#signout" onClick={signoutHandler}>
-                                        Sign Out
+                                        <i className='fas fa-sign-out'/>  Sign Out
                                     </Link>
                                 </li>
                             </ul>
                         </div>
-
                     ) : (
-                        <Link to="/signin">Sign In</Link>
+                        <Link to="/signin"><i className='fas fa-sign-out'/> Sign In</Link>
                     )
                 }
                 {
@@ -79,27 +83,27 @@ export default function Header(props) {
                             <ul className="dropdown-content">
                                 <li>
                                     <Link to="/dashboard">
-                                        Dashboard
+                                        <i className='fas fa-chart-bar'/> Dashboard
                                     </Link>
                                 </li>
                                 <li>
                                     <Link to="/productlist/pageNumber/1">
-                                        Products
+                                        <i className="fas fa-database" /> Products
                                     </Link>
                                 </li>
                                 <li>
                                     <Link to="/orderlist/pageNumber/1">
-                                        Orders
+                                        <i className="far fa-list-alt" /> Orders
                                     </Link>
                                 </li>
                                 <li>
                                     <Link to="/userlist/pageNumber/1">
-                                        Users
+                                        <i className="fas fa-users-cog" /> Users
                                     </Link>
                                 </li>
                                 <li>
                                     <Link to="/support">
-                                        Support
+                                        <i className="fas fa-comments" /> Support
                                     </Link>
                                 </li>
                             </ul>

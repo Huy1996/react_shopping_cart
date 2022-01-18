@@ -22,6 +22,7 @@ import ProductListScreen from "../screens/ProductListScreen";
 import OrderListScreen from "../screens/OrderListScreen";
 import ProductEditScreen from "../screens/ProductEditScreen";
 import HomeScreen from "../screens/HomeScreen";
+import UserDashboardScreen from "../screens/UserDashboardScreen";
 
 export default function ScreenContainer(props) {
     return (
@@ -46,8 +47,11 @@ export default function ScreenContainer(props) {
             <Route path="/search/category/:category/brand/:brand/name/:name/min/:min/max/:max/rating/:rating/order/:order/pageNumber/:pageNumber"  element={<SearchScreen/>}                        exact />
             <Route path='/profile'                                                                                                                 element={<Private><ProfileScreen/></Private>}          />
             <Route path='/map'                                                                                                                     element={<Private><MapScreen/></Private>}              />
+            <Route path='/userdashboard'                                                                                                           element={<Private><UserDashboardScreen/></Private>}    />
+            <Route path='/userdashboard/:id'                                                                                                       element={<Admin><UserDashboardScreen/></Admin>}  exact />
             <Route path='/support'                                                                                                                 element={<Admin><SupportScreen/></Admin>}              />
             <Route path='/dashboard'                                                                                                               element={<Admin><DashboardScreen/></Admin>}            />
+            <Route path='/userlist'                                                                                                                element={<Admin><UserListScreen/></Admin>}             />
             <Route path='/userlist/pageNumber/:pageNumber'                                                                                         element={<Admin><UserListScreen/></Admin>}             />
             <Route path='/user/:id/edit'                                                                                                           element={<Admin><UserEditScreen/></Admin>}       exact />
             <Route path='/productlist/pageNumber/:pageNumber'                                                                                      element={<Admin><ProductListScreen/></Admin>}          />

@@ -6,20 +6,19 @@ import {createReview, deleteReview, listReviewProduct, updateReview} from "../ac
 import LoadingBox from "./LoadingBox";
 import {REVIEW_DELETE_RESET, REVIEW_UPDATE_RESET} from "../constants/reviewConstant";
 import ReviewEditor from "./ReviewEditor";
+import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
+import EditIcon from '@mui/icons-material/Edit';
 
 export default function Review(props) {
     const [edit, setEdit]           = useState(false);
     const [rating, setRating]       = useState();
     const [comment, setComment]     = useState("");
 
-    const reviewProductList         = useSelector(state => state.reviewProductList);
-    const {loading:loadingReviews, error: errorReviews, reviews} = reviewProductList;
-
     const userSignin                = useSelector(state => state.userSignin);
     const { userInfo }              = userSignin;
 
     const reviewDelete              = useSelector(state => state.reviewDelete);
-    const {loading: loadingDelete, success: successDelete, error: errorDelete} = reviewDelete;
+    const {success: successDelete} = reviewDelete;
 
     const reviewUpdate              = useSelector(state => state.reviewUpdate);
     const {loading: loadingUpdate, success: successUpdate, error: errorUpdate} = reviewUpdate;
@@ -40,9 +39,7 @@ export default function Review(props) {
                 type: REVIEW_UPDATE_RESET
             })
         }
-        dispatch(listReviewProduct(props.productId));
-        console.log(reviews)
-    }, [dispatch, props.productId, successDelete, successUpdate])
+    }, [dispatch, successDelete, successUpdate])
 
     const deleteHandler = (review) => {
         if(window.confirm('Are you sure to delele?')){
@@ -62,16 +59,75 @@ export default function Review(props) {
     };
 
     return (
-        <div>
+        <div className='col-2 card cart-body'>
+            <div
+                style={{backgroundColor: '#D9D7F1'}}
+                className="row"
+            >
+                <div>
+                    <p>
+                        <strong>{props.name && props.review.user.name}</strong> {props.review.createdAt.substring(0, 10)}
+                    </p>
+                </div>
+                <div>
+                    {userInfo ?
+                        (userInfo._id === props.review.user._id &&
+                            (<button type='button'
+                                     className='small'
+                                     onClick={() => setEdit(!edit)}
+                                >
+                                    <EditIcon />
+                                </button>
+                            )) : <></>
+                    }
+                    {userInfo ?
+                        ((userInfo._id === props.review.user._id || userInfo.isAdmin) &&
+                            (<button type='button'
+                                     className='small'
+                                     onClick={() => deleteHandler(props.review)}
+                            >
+                                <DeleteForeverIcon />
+                            </button>))
+                        : <></>
+                    }
+                </div>
+            </div>
+            <div style={{backgroundColor: '#FFFDDE'}}>
+                <Rating rating={props.review.rating} caption=" "/>
+                <p>{props.review.comment}</p>
+            </div>
+            {edit && userInfo._id === props.review.user._id &&
+            <>
+                <ReviewEditor
+                    submitHandler={(e) => submitHandler(e, props.review._id)}
+                    title="Edit your review"
+                    rating={rating}
+                    updateRating={(value) => setRating(value)}
+                    updateComment={(value) => setComment(value)}
+                    button='Edit'
+                />
+                {loadingUpdate && <LoadingBox/>}
+                {errorUpdate && <MessageBox variant='danger'>{errorUpdate}</MessageBox>}
+            </>
+            }
+        </div>
+    )
+
+
+
+
+}
+
+
+
+/*
+
+<div>
             <h2 id="reviews">Reviews</h2>
-            {loadingReviews && <LoadingBox />}
-            {errorReviews && <MessageBox variant='danger' >{errorReviews}</MessageBox>}
-            {loadingDelete && <LoadingBox/>}
-            {errorDelete && <MessageBox variant='danger'>{errorDelete}</MessageBox>}
-            {reviews ? (reviews.length === 0 ? (<MessageBox>There is no reviews</MessageBox>) :
+            {props.reviews.length === 0 ? (<MessageBox>There is no reviews</MessageBox>) :
                 (
                     <ul>
-                        {reviews.map((review) => (
+                        {props.reviews.map((review) => (
                             <li key={review._id}>
                                 <div className='top row col'>
                                     <div className='col-2'>
@@ -90,7 +146,7 @@ export default function Review(props) {
                                                                  className='small'
                                                                  onClick={() => setEdit(!edit)}
                                                         >
-                                                            <i className="fa fa-edit"/>
+                                                            <EditIcon />
                                                         </button>
                                                         )) : <></>
                                                 }
@@ -100,7 +156,7 @@ export default function Review(props) {
                                                                  className='small'
                                                                  onClick={() => deleteHandler(review)}
                                                         >
-                                                            <i className="fa fa-trash"/>
+                                                            <DeleteForeverIcon />
                                                         </button>))
                                                     : <></>
                                                 }
@@ -131,15 +187,9 @@ export default function Review(props) {
                             </li>
                         ))}
                     </ul>
-                )) : <></>
+                )
             }
         </div>
-    )
-}
-
-
-
-/*
 
 <div>
                                     <h2 id="reviews">Reviews</h2>

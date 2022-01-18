@@ -6,6 +6,8 @@ import LoadingBox from '../components/LoadingBox'
 import MessageBox from '../components/MessageBox'
 import { useNavigate } from 'react-router-dom';
 import {USER_DETAILS_RESET} from "../constants/userConstant";
+import {ORDER_LIST_USER_RESET} from "../constants/orderConstant";
+import {REVIEW_USER_LIST_RESET} from "../constants/reviewConstant";
 
 export default function UserListScreen(props) {    
     const navigate = useNavigate();
@@ -21,6 +23,12 @@ export default function UserListScreen(props) {
         dispatch({
             type: USER_DETAILS_RESET,
         });
+        dispatch({
+            type: ORDER_LIST_USER_RESET,
+        })
+        dispatch({
+            type: REVIEW_USER_LIST_RESET,
+        })
     }, [dispatch, successDelete, navigate, pageNumber])
 
     const deleteHandler = (user) => {
@@ -65,6 +73,13 @@ export default function UserListScreen(props) {
                                             onClick={() => navigate(`/user/${user._id}/edit`)}
                                         >
                                             <i className="fa fa-edit" />
+                                        </button>
+                                        <button
+                                            type='button'
+                                            className='small'
+                                            onClick={() => navigate(`/userdashboard/${user._id}`)}
+                                        >
+                                            <i className="far fa-eye" />
                                         </button>
                                         <button
                                             type='button'
