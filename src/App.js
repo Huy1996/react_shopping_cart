@@ -1,16 +1,11 @@
 import React, { useState } from "react";
 import { BrowserRouter } from "react-router-dom";
-import { useSelector } from "react-redux";
-import ChatBox from "./components/ChatBox";
-import SideBar from "./components/SideBar";
-import Header from "./components/Header";
-import ScreenContainer from "./components/ScreenContainer";
+import SideBar from "./components/App/SideBar";
+import Header from "./components/App/Header";
+import ScreenContainer from "./components/App/ScreenContainer";
+import Footer from "./components/App/Footer";
 
 export default function App() {
-
-    const userSignin = useSelector((state) => state.userSignin);
-    const {userInfo} = userSignin;
-
     const [sidebarIsOpen, setSidebarIsOpen] = useState(false);
 
     return (
@@ -27,8 +22,7 @@ export default function App() {
                     <ScreenContainer />
                 </main>
                 <footer className="row center">
-                    {userInfo && !userInfo.isAdmin && <ChatBox userInfo={userInfo} />}
-                    <p>Copyright <i className={"fa fa-copyright"}/> 2021-2022 CHTQ, Inc - All Right Reserved</p>
+                    <Footer />
                 </footer>
             </div>
         </BrowserRouter>
