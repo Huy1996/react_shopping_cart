@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react'
-import LoadingBox from '../components/LoadingBox'
+import LoadingBox from '../components/Loading/LoadingBox'
 import { LoadScript, GoogleMap, StandaloneSearchBox, Marker } from '@react-google-maps/api';
 import Axios from 'axios';
 import { useDispatch } from 'react-redux';

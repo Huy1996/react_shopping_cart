@@ -63,7 +63,11 @@ a:hover {
   color: #ff8000;
 }
 
-ul {
+ul{
+  list-style-type: disc;
+}
+
+.none{
   padding: 0;
   margin: 0;
   list-style-type: none;
@@ -230,9 +234,11 @@ img.small {
 img.medium {
   max-width: 29rem;
   width: 100%;
+  max-height: 355px;
 }
 
 img.large {
+  max-width: 940px;
   width: 100%;
 }
 
@@ -242,6 +248,11 @@ img.large {
   background-color: #f8f8f8;
   border-radius: 0.5rem;
   margin: 1rem;
+}
+
+.card-fixed {
+  width: 290px;
+  height: 480px;
 }
 
 .card-body {
@@ -576,4 +587,53 @@ img.large {
 }
 .support-users .unread {
   background-color: #f02020;
+}
+
+
+/* Loading Animation */
+.skeleton {
+  opacity: 0.7;
+  animation: skeleton-loading 1s linear infinite alternate;
+}
+
+.skeleton-text {
+  width: 60%;
+  height: 2rem;
+  border-radius: .125rem;
+  margin-left: 1rem;
+}
+
+.skeleton-text:first-child{
+  margin-top: 2rem;
+  margin-bottom: 3rem;
+}
+
+.skeleton-text:last-child{
+  width: 20%;
+}
+
+@keyframes skeleton-loading {
+  0% {
+    background-color: hsl(200, 20%, 70%);
+  }
+  100% {
+    background-color: hsl(200, 20%, 95%);
+  }
+}
+
+.skeleton-img-medium {
+  margin-top: 0.5rem;
+  margin-left: 1rem;
+  width: 27rem;
+  height: 355px;
+}
+
+
+
+
+.product-list {
+  max-width: 100%;
+  margin-left: 5%;
+  margin-right: 5%;
+  justify-content: center;
 }
