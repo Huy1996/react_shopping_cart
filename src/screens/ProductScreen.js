@@ -166,7 +166,7 @@ export default function ProductScreen(props) {
                                     </div>
                                 </div>
                                 <div>
-                                    <h2 id="reviews">Reviews</h2>
+                                    <h2 id="reviews" style={{marginLeft: '1rem'}} >Reviews</h2>
                                     {loadingDelete && <LoadingBox />}
                                     {errorDelete && <MessageBox variant='danger' >{errorDelete}</MessageBox>}
                                     {loadingReviews ? <LoadingBox /> :

@@ -113,8 +113,14 @@ button.block {
 }
 
 button.small {
-  font-size: 1.2rem;
-  border-radius: 100%;
+  text-align: center;
+  font-size: 50%;
+  border-radius: 100px;
+  margin: auto 0.3rem;
+  border-color: #1230928a;
+  border-width: 1.5px;
+  box-shadow: 0 0 2px #777777;
+  background-color: #ffffff;
 }
 
 button.small:hover{
@@ -223,8 +229,9 @@ img {
 }
 
 img.small {
-  max-width: 5rem;
+  max-width: 5.5rem;
   width: 100%;
+  
 }
 
 img.medium {
@@ -239,9 +246,10 @@ img.large {
 /* Card */
 .card {
   border: 0.1rem #c0c0c0 solid;
-  background-color: #f8f8f8;
+  /* background-color: #f8f8f8; */
   border-radius: 0.5rem;
   margin: 1rem;
+  /* padding: 1rem; */
 }
 
 .card-body {
@@ -576,4 +584,39 @@ img.large {
 }
 .support-users .unread {
   background-color: #f02020;
+}
+.review-product {
+  text-align: center;
+}
+.product-name {
+  margin: auto 1rem;
+  
+} 
+.review-body{
+  margin: auto 1rem;
+}
+#order-id, #order-date {
+  margin: 1rem 1rem;
+}
+.order-detail{
+  margin: auto;
+  /* border: 0.1rem #c0c0c0 solid; */
+  border-radius: 0.5rem;
+  padding: 0.1rem;
+}
+.product-image {
+  max-width: 10rem;
+}
+.product-name {
+  max-width: 20rem;
+}
+.order-total {
+  max-width: 30rem;
+  text-align: right;
+}
+.order-status {
+  border: 0.1rem #c0c0c0 solid;
+  border-radius: 0.5rem;
+  margin-bottom: 1rem;
+  margin-left: 1rem;
 }
