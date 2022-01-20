@@ -8,6 +8,7 @@ import {REVIEW_DELETE_RESET, REVIEW_UPDATE_RESET} from "../../constants/reviewCo
 import ReviewEditor from "./ReviewEditor";
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import EditIcon from '@mui/icons-material/Edit';
+import {formatDate} from "../../helper";
 
 export default function Review(props) {
     const [edit, setEdit]           = useState(false);
@@ -57,16 +58,15 @@ export default function Review(props) {
             alert('Please enter comment and rating')
         }
     };
-
     return (
         <div className='col-2 card cart-body'>
             <div
                 style={{backgroundColor: '#D9D7F1'}}
                 className="row"
             >
-                <div>
+                <div className='review-body'>
                     <p>
-                        <strong>{props.name && props.review.user.name}</strong> {props.review.createdAt.substring(0, 10)}
+                        <strong>{props.name && props.review.user.name}</strong> Reviewed at: {formatDate(props.review.createdAt)}
                     </p>
                 </div>
                 <div>
@@ -92,8 +92,7 @@ export default function Review(props) {
                     }
                 </div>
             </div>
-            <hr />
-            <div style={{backgroundColor: '#FFFDDE'}}>
+            <div className='review-body'>
                 <Rating rating={props.review.rating} caption=" "/>
                 <p>{props.review.comment}</p>
             </div>

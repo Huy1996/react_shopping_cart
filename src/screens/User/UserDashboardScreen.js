@@ -8,6 +8,7 @@ import {listOrderUser} from "../../actions/orderAction";
 import {listReviewUser} from "../../actions/reviewAction";
 import Review from "../../components/Review and Rating/Review";
 import OrderItem from "../../components/Order/OrderItem";
+import {formatDate} from "../../helper";
 
 export default function UserDashboardScreen(props) {
 
@@ -36,6 +37,7 @@ export default function UserDashboardScreen(props) {
         dispatch(listReviewUser({userId}));
 
     },[dispatch, navigate, id])
+
 
     return (
         loading ? (<LoadingBox />)
@@ -72,61 +74,72 @@ export default function UserDashboardScreen(props) {
                     </li>
                 </ul>
                 <div className='card cart-body'>
-                    <h3>Reviews</h3>
+                    <h3 style={{marginLeft: '1rem'}} >Reviews</h3>
                     {loadingReview ? <LoadingBox /> :
                         errorReview ? <MessageBox variant='danger' >{errorReview}</MessageBox> :
-                        countReview === 0 ? <MessageBox>{user.name} haven't posted any product reviews.</MessageBox> :
-                            reviews.map((review) => (
-                                <div className='row card cart-body'>
-                                    <div>
-                                        <Link to={`/product/${review.product._id}`}>
-                                            <h1>{review.product.name}</h1>
-                                        </Link>
-                                        <img src={review.product.image} className='small'/>
+                            countReview === 0 ? <MessageBox>{user.name} haven't posted any product reviews.</MessageBox> :
+                                reviews.map((review) => (
+                                    <div className='row col card cart-body'>
+                                        <div className=' col-1 review-product'>
+                                            <Link to={`/product/${review.product._id}`}>
+                                                <h1 className='product-name'>{review.product.name}</h1>
+                                                {/* <Rating rating={review.rating} caption=" "/> */}
+                                            </Link>
+                                            <img src={review.product.image} className='small'/>
+                                        </div>
+                                        <div className='col-3'>
+                                            <Review review={review} name={false} />
+                                        </div>
                                     </div>
-                                    <Review review={review} name={false} />
-                                </div>
-                    ))}
+                                ))}
                 </div>
                 <div className='card cart-body'>
-                    <h3>Orders</h3>
+                    <h3 style={{marginLeft: '1rem'}}>Orders</h3>
                     {loadingOrder ? <LoadingBox/> :
                         errorOrder ? <MessageBox variant='danger'>{errorOrder}</MessageBox> :
                             countOrder === 0 ? <MessageBox>{user.name} haven't purchased anything.</MessageBox> :
                                 orders.map((order) =>(
                                     <div className='row col card cart-body'>
                                         <div className='min-30'>
+                                            <div style={{textAlign: 'center'}}> <h1>Order Status</h1></div>
                                             {order.isDelivered ? (
-                                                <MessageBox variant="success">
-                                                    Delivered at {order.deliveredAt.substring(0, 10)}
+                                                <div className='order-status'><MessageBox variant="success">
+                                                    Delivered at {formatDate(order.deliveredAt)}
                                                 </MessageBox>
+                                                </div>
+
                                             ) : (
-                                                <MessageBox variant="danger">
+                                                <div className='order-status'><MessageBox variant="danger">
                                                     Not Delivered<br />
                                                     {userInfo.isAdmin && <Link to={`/order/${order._id}`}>Delivery Order Now</Link>}
                                                 </MessageBox>
+                                                </div>
+
                                             )}
-                                            <h2 />
                                             {order.isPaid ? (
-                                                <MessageBox variant="success">
-                                                    Paid at {order.paidAt.substring(0, 10)}
+                                                <div className='order-status'><MessageBox variant="success" >
+                                                    Paid at {formatDate(order.paidAt)}
                                                 </MessageBox>
+                                                </div>
+
                                             ) : (
-                                                <MessageBox variant="danger">
+                                                <div className='order-status'><MessageBox variant="danger">
                                                     Not Paid<br />
                                                     {userInfo._id === order.user && <Link to={`/order/${order._id}`}>Pay Order Now</Link>}
                                                 </MessageBox>
+                                                </div>
+
                                             )}
                                         </div>
-                                        <div className='card cart-body col-2'>
-                                            <Link to={`/order/${order._id}`}>
-                                                <h2>Order ID: {order._id}</h2>
+                                        <div className='card cart-body col-2' >
+                                            <Link to={`/order/${order._id}`} >
+                                                <h3 id='order-id'>Order ID: {order._id}</h3>
                                             </Link>
-                                            <h1>{order.createdAt.substring(0, 10)}</h1>
+                                            <p id='order-date'>ORDER PLACED: {formatDate(order.createdAt)}</p>
                                             <OrderItem order={order}/>
                                         </div>
                                     </div>
-                    ))}
+                                ))}
                 </div>
             </div>
             )

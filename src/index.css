@@ -232,9 +232,8 @@ img.small {
 }
 
 img.medium {
-  max-width: 29rem;
-  width: 100%;
-  max-height: 355px;
+  width: 29rem;
+  height: 355px;
 }
 
 img.large {
@@ -629,11 +628,45 @@ img.large {
 }
 
 
-
-
 .product-list {
   max-width: 100%;
   margin-left: 5%;
   margin-right: 5%;
   justify-content: center;
+}
+
+.review-product {
+  text-align: center;
+}
+.product-name {
+  margin: auto 1rem;
+
+}
+.review-body{
+  margin: auto 1rem;
+}
+#order-id, #order-date {
+  margin: 1rem 1rem;
+}
+.order-detail{
+  margin: auto;
+  /* border: 0.1rem #c0c0c0 solid; */
+  border-radius: 0.5rem;
+  padding: 0.1rem;
+}
+.product-image {
+  max-width: 10rem;
+}
+.product-name {
+  max-width: 20rem;
+}
+.order-total {
+  max-width: 30rem;
+  text-align: right;
+}
+.order-status {
+  border: 0.1rem #c0c0c0 solid;
+  border-radius: 0.5rem;
+  margin-bottom: 1rem;
+  margin-left: 1rem;
 }
