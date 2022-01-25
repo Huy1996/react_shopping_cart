@@ -48,7 +48,7 @@ export default function ScreenContainer(props) {
             <Route path="/search/category/:category/brand/:brand/name/:name/min/:min/max/:max/rating/:rating/order/:order/pageNumber/:pageNumber"  element={<SearchScreen/>}                        exact />
             <Route path='/profile'                                                                                                                 element={<Private><ProfileScreen/></Private>}          />
             <Route path='/map'                                                                                                                     element={<Private><MapScreen/></Private>}              />
-            <Route path='/userdashboard'                                                                                                           element={<Private><UserDashboardScreen/></Private>}    />
+            <Route path='/userdashboard'                                                                                                           element={<Private><UserDashboardScreen/></Private>} exact    />
             <Route path='/userdashboard/:id'                                                                                                       element={<Admin><UserDashboardScreen/></Admin>}  exact />
             <Route path='/support'                                                                                                                 element={<Admin><SupportScreen/></Admin>}              />
             <Route path='/dashboard'                                                                                                               element={<Admin><DashboardScreen/></Admin>}            />

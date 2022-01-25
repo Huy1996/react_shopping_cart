@@ -74,13 +74,13 @@ export default function ProductEditScreen(props) {
                         loading={false}
                         error={undefined}
                         submitHandler={e => submitHandler(e)}
-                        name={name} setName={value => setName(value)}
-                        price={price} setPrice={value => setPrice(value)}
-                        image={image} setImage={value => setImage(value)}
-                        category={category} setCategory={value => setCategory(value)}
-                        countInStock={countInStock} setCountInStock={value => setCountInStock(value)}
-                        brand={brand} setBrand={value => setBrand(value)}
-                        description={description} setDescription={value => setDescription(value)}
+                        name={name}                     setName={value => setName(value)}
+                        price={price}                   setPrice={value => setPrice(value)}
+                        image={image}                   setImage={value => setImage(value)}
+                        category={category}             setCategory={value => setCategory(value)}
+                        countInStock={countInStock}     setCountInStock={value => setCountInStock(value)}
+                        brand={brand}                   setBrand={value => setBrand(value)}
+                        description={description}       setDescription={value => setDescription(value)}
                     />
             }
         </div>
