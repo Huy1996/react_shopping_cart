@@ -2,6 +2,7 @@ import * as uc from '../constants/userConstant'
 import {fetching} from "../helper";
 import * as method from "../constants/AJAXConstant"
 import * as sc from '../constants/storageConstant'
+import {CART_EMPTY} from "../constants/cartConstant";
 
 export const signin = (email, password) => async (dispatch) => {
     const url = '/api/users/signin';
@@ -46,6 +47,9 @@ export const signout = () => (dispatch) => {
     localStorage.removeItem(sc.SHIPPING_ADDRESS);
     dispatch({
         type: uc.USER_SIGNOUT,
+    })
+    dispatch({
+        type: CART_EMPTY,
     })
 }
 

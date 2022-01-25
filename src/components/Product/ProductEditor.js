@@ -66,6 +66,7 @@ function ProductEditor(props) {
                                         placeholder="Enter name"
                                         value={props.name}
                                         onChange={(e) => props.setName(e.target.value)}
+                                        required={true}
                                     />
                                 </div>
                                 <div>
@@ -76,6 +77,7 @@ function ProductEditor(props) {
                                         placeholder="Enter price"
                                         value={props.price}
                                         onChange={(e) => props.setPrice(e.target.value)}
+                                        required={true}
                                     />
                                 </div>
                                 <div>
@@ -86,6 +88,7 @@ function ProductEditor(props) {
                                         placeholder="Enter image"
                                         value={props.image}
                                         readOnly={true}
+                                        required={true}
                                     />
                                 </div>
                                 <div>
@@ -95,6 +98,7 @@ function ProductEditor(props) {
                                         id='imageFile'
                                         label="Choose Image"
                                         onChange={uploadFileHandler}
+                                        required={true}
                                     />
                                     {loadingUpload && (<LoadingBox />)}
                                     {errorUpload && (<MessageBox variant="danger">{errorUpload}</MessageBox>)}
@@ -108,6 +112,7 @@ function ProductEditor(props) {
                                         placeholder="Enter category"
                                         value={props.category}
                                         onChange={(e) => props.setCategory(e.target.value)}
+                                        required={true}
                                     />
                                     <datalist id='categories'>
                                         {
@@ -126,6 +131,7 @@ function ProductEditor(props) {
                                         placeholder="Enter brand"
                                         value={props.brand}
                                         onChange={(e) => props.setBrand(e.target.value)}
+                                        required={true}
                                     />
                                     <datalist id='brands'>
                                         {
@@ -143,6 +149,7 @@ function ProductEditor(props) {
                                         placeholder="Enter Count In Stock"
                                         value={props.countInStock}
                                         onChange={(e) => props.setCountInStock(e.target.value)}
+                                        required={true}
                                     />
                                 </div>
                                 <div>

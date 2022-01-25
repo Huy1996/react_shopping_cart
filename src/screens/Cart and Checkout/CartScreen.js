@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link, useLocation, useNavigate, useParams } from 'react-router-dom';
-import { addToCart, removeFromCart } from '../../actions/cartAction';
+import {addToCart, editCart, removeFromCart} from '../../actions/cartAction';
 import MessageBox from '../../components/Support/MessageBox';
 
 export default function CartScreen(props) {
@@ -58,7 +58,7 @@ export default function CartScreen(props) {
                                                 </Link>
                                             </div>
                                             <div>
-                                                <select value={item.qty} onChange={e =>dispatch(addToCart(item.product, Number(e.target.value)))}>
+                                                <select value={item.qty} onChange={e =>dispatch(editCart(item.product, Number(e.target.value)))}>
                                                     {
                                                         [...Array(item.countInStock).keys()].map(x => (
                                                             <option 
