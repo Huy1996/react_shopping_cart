@@ -4,17 +4,19 @@ export const orderListMineReducer = (state={orders:[]}, action) => {
     switch(action.type){
         case oc.ORDER_MINE_LIST_REQUEST:
             return{
-                loading: true
+                loading:    true
             };
         case oc.ORDER_MINE_LIST_SUCCESS:
             return {
-                loading: false,
-                orders: action.payload,
+                loading:    false,
+                orders:     action.payload.orders,
+                pages:      action.payload.pages,
+                page:       action.payload.page,
             }
         case oc.ORDER_MINE_LIST_FAIL:
             return {
-                loading: false,
-                orders: action.payload,
+                loading:    false,
+                error:     action.payload,
             }
         default:
             return state;
@@ -29,15 +31,15 @@ export const orderListReducer = (state={orders:[]}, action) => {
             };
         case oc.ORDER_LIST_SUCCESS:
             return {
-                loading: false,
-                orders: action.payload.orders,
+                loading:    false,
+                orders:     action.payload.orders,
                 pages:      action.payload.pages,
                 page:       action.payload.page,
             }
         case oc.ORDER_LIST_FAIL:
             return {
                 loading: false,
-                orders: action.payload,
+                error: action.payload,
             }
         default:
             return state;
@@ -61,7 +63,7 @@ export const orderListUserReducer = (state={orders:[]}, action) => {
         case oc.ORDER_LIST_USER_FAIL:
             return {
                 loading: false,
-                orders: action.payload,
+                error: action.payload,
             }
         case oc.ORDER_LIST_USER_RESET:
             return {};
@@ -84,7 +86,7 @@ export const orderDeleteReducer = (state={}, action) => {
         case oc.ORDER_DELETE_FAIL:
             return {
                 loading: false,
-                orders: action.payload,
+                error: action.payload,
             }
         case oc.ORDER_DELETE_RESET:
             return {};

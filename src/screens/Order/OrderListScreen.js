@@ -41,7 +41,7 @@ export default function OrderListScreen(props) {
                 error ? (<MessageBox variant="danger">{error}</MessageBox>)
                 :(
                     <>
-                    <table className='table'>
+                    <table className='content-table'>
                         <thead>
                             <tr>
                                 <th>ID</th>
@@ -69,14 +69,14 @@ export default function OrderListScreen(props) {
                                                 className='small' 
                                                 onClick={() => {navigate(`/order/${order._id}`)}}
                                             >
-                                                Details
+                                                <i className="fas fa-info-circle" /> Details
                                             </button>
                                             <button
                                                 type='button'
                                                 className='small'
                                                 onClick={() => deleteHandler(order)}
                                             >
-                                                Delete
+                                                <i className="fa fa-trash" /> Delete
                                             </button>
                                         </td>
                                     </tr>

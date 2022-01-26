@@ -38,6 +38,7 @@ export default function ScreenContainer(props) {
             <Route path="/placeorder"                                                                                                              element={<PlaceOrderScreen/>}                          />
             <Route path="/order/:id"                                                                                                               element={<OrderScreen/>}                               />
             <Route path="/orderhistory"                                                                                                            element={<OrderHistoryScreen/>}                        />
+            <Route path="/orderhistory/pageNumber/:pageNumber"                                                                                     element={<OrderHistoryScreen/>}                        />
             <Route path="/search/name"                                                                                                             element={<SearchScreen/>}                        exact />
             <Route path="/search/name/:name"                                                                                                       element={<SearchScreen/>}                        exact />
             <Route path="/search/category/:category"                                                                                               element={<SearchScreen/>}                        exact />

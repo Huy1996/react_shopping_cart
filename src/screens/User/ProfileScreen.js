@@ -6,11 +6,13 @@ import MessageBox from '../../components/Support/MessageBox';
 import { USER_UPDATE_PROFILE_RESET } from '../../constants/userConstant';
 
 export default function ProfileScreen() {
-    const [name, setName] = useState('');    
-    const [email, setEmail] = useState('');    
-    const [password, setPassword] = useState('');
+    // Defined hooks
+    const [name, setName]                       = useState('');
+    const [email, setEmail]                     = useState('');
+    const [password, setPassword]               = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
 
+    // Extract data from Redux store
     const userSignin = useSelector(state => state.userSignin);
     const { userInfo } = userSignin;
 
@@ -20,6 +22,8 @@ export default function ProfileScreen() {
     const userUpdateProfile = useSelector(state => state.userUpdateProfile);
     const { success: successUpdate, error: errorUpdate, loading: loadingUpdate } = userUpdateProfile
 
+
+    //
     const dispatch = useDispatch();
     useEffect(() => {
         if(!user){
