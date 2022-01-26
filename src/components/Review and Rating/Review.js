@@ -2,12 +2,10 @@ import React, {useEffect, useState} from 'react'
 import MessageBox from "../Support/MessageBox";
 import Rating from "./Rating";
 import {useDispatch, useSelector} from "react-redux";
-import {createReview, deleteReview, listReviewProduct, updateReview} from "../../actions/reviewAction.js";
+import {deleteReview, updateReview} from "../../actions/reviewAction.js";
 import LoadingBox from "../Loading/LoadingBox";
 import {REVIEW_DELETE_RESET, REVIEW_UPDATE_RESET} from "../../constants/reviewConstant";
 import ReviewEditor from "./ReviewEditor";
-import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
-import EditIcon from '@mui/icons-material/Edit';
 import {formatDate} from "../../helper";
 
 export default function Review(props) {
@@ -76,7 +74,7 @@ export default function Review(props) {
                                      className='small'
                                      onClick={() => setEdit(!edit)}
                                 >
-                                    <EditIcon />
+                                    <i className="fa fa-edit" /> Edit
                                 </button>
                             )) : <></>
                     }
@@ -86,7 +84,7 @@ export default function Review(props) {
                                      className='small'
                                      onClick={() => deleteHandler(props.review)}
                             >
-                                <DeleteForeverIcon />
+                                <i className="fa fa-trash" /> Delete
                             </button>))
                         : <></>
                     }

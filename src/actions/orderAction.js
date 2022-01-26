@@ -72,9 +72,9 @@ export const deliverOrder = (orderId) => async (dispatch, getState) => {
     )
 }
 
-export const listOrderMine = () => async (dispatch, getState) => {
+export const listOrderMine = ({pageNumber=''}) => async (dispatch, getState) => {
     const {userSignin:{userInfo}} = getState();
-    const url = '/api/orders/mine';
+    const url = `/api/orders/mine?pageNumber=${pageNumber}`;
     await fetching(
         dispatch,
         method.GET,

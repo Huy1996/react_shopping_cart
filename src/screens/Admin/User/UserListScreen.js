@@ -49,7 +49,7 @@ export default function UserListScreen(props) {
                 :
                 (
                     <>
-                    <table className='table'>
+                    <table className='content-table center'>
                         <thead>
                             <tr>
                                 <th>ID</th>
@@ -61,7 +61,7 @@ export default function UserListScreen(props) {
                         </thead>
                         <tbody>
                             {users.map((user) => (
-                                <tr key={user._id}>
+                                <tr key={user._id} className={`${user.isAdmin ? 'active-row' : ''}`}>
                                     <td>{user._id}</td>                                    
                                     <td>{user.name}</td>                                    
                                     <td>{user.email}</td>
@@ -72,21 +72,21 @@ export default function UserListScreen(props) {
                                             className='small'
                                             onClick={() => navigate(`/user/${user._id}/edit`)}
                                         >
-                                            <i className="fa fa-edit" />
+                                            <i className="fa fa-edit" /> Edit
                                         </button>
                                         <button
                                             type='button'
                                             className='small'
                                             onClick={() => navigate(`/userdashboard/${user._id}`)}
                                         >
-                                            <i className="far fa-eye" />
+                                            <i className="fas fa-info-circle" /> Details
                                         </button>
                                         <button
                                             type='button'
                                             className='small'
                                             onClick={() => deleteHandler(user)}  
                                         >
-                                            <i className="fa fa-trash" />
+                                            <i className="fa fa-trash" /> Delete
                                         </button>
                                     </td>
                                 </tr>

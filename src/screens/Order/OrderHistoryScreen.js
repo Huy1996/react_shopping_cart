@@ -3,16 +3,20 @@ import { useDispatch, useSelector } from 'react-redux'
 import { listOrderMine } from '../../actions/orderAction';
 import LoadingBox from '../../components/Loading/LoadingBox';
 import MessageBox from '../../components/Support/MessageBox';
-import { useNavigate } from 'react-router-dom';
+import {Link, useNavigate, useParams} from 'react-router-dom';
 
 export default function OrderHistoryScreen(props) {
     const navigate = useNavigate();
+    const {pageNumber=1} = useParams();
+
     const orderListMine = useSelector(state => state.orderListMine);
-    const { loading, error, orders } = orderListMine;
+    const { loading, error, orders, page, pages } = orderListMine;
+
     const dispatch = useDispatch();
     useEffect(() => {
-        dispatch(listOrderMine())
-    }, [dispatch])
+        dispatch(listOrderMine({pageNumber}));
+    }, [dispatch, pageNumber])
+
     return (
         <div>
             <h1>Order History</h1>
@@ -20,42 +24,52 @@ export default function OrderHistoryScreen(props) {
                 loading ? (<LoadingBox />):
                 error ? (<MessageBox variant="danger">{error}</MessageBox>)
                 :(
-                    <table className='table'>
-                        <thead>
-                            <tr>
-                                <th>ID</th>
-                                <th>DATE</th>
-                                <th>TOTAL</th>
-                                <th>PAID</th>
-                                <th>DELIVERED</th>
-                                <th>ACTIONS</th>
-                            </tr>
-                        </thead>
-                        <tbody>
+                    <>
+                        <table className='content-table'>
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>DATE</th>
+                                    <th>TOTAL</th>
+                                    <th>PAID</th>
+                                    <th>DELIVERED</th>
+                                    <th>ACTIONS</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {
+                                    orders.map((order) => (
+                                        <tr key={order._id}>
+                                            <td>{order._id}</td>
+                                            <td>{order.createdAt.substring(0, 10)}</td>
+                                            <td>$ {order.totalPrice.toFixed(2)}</td>
+                                            <td>{order.isPaid ? order.paidAt.substring(0, 10) : 'No'}</td>
+                                            <td>{order.isDelivered ? order.deliveredAt.substring(0, 10) : 'No'}</td>
+                                            <td>
+                                                <button
+                                                    type='button'
+                                                    className='small'
+                                                    onClick={() => {navigate(`/order/${order._id}`)}}
+                                                >
+                                                    <i className="fas fa-info-circle" /> Details
+                                                </button>
+                                            </td>
+                                        </tr>
+                                    ))
+                                }
+                            </tbody>
+                        </table>
+                        <div className='row center pagination'>
                             {
-                                orders.map((order) => (
-                                    <tr key={order._id}>
-                                        <td>{order._id}</td>
-                                        <td>{order.createdAt.substring(0, 10)}</td>
-                                        <td>$ {order.totalPrice.toFixed(2)}</td>
-                                        <td>{order.isPaid ? order.paidAt.substring(0, 10) : 'No'}</td>
-                                        <td>{order.isDelivered ? order.deliveredAt.substring(0, 10) : 'No'}</td>
-                                        <td>
-                                            <button 
-                                                type='button' 
-                                                className='small' 
-                                                onClick={() => {navigate(`/order/${order._id}`)}}
-                                            >
-                                                Details
-                                            </button>
-                                        </td>
-                                    </tr>
+                                [...Array(pages).keys()].map(x => (
+                                <Link className={x+1 === page ? 'active' : ''} key={x+1} to={`/orderhistory/pageNumber/${x+1}`}>{x+1}</Link>
                                 ))
                             }
-                        </tbody>
-                    </table>    
+                        </div>
+                    </>
                 )
             }
+
         </div>
     )
 }
