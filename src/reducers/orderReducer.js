@@ -143,6 +143,30 @@ export const orderDeliverReducer = (state={}, action) => {
     }
 }
 
+export const orderRequestCancelReducer = (state={}, action) => {
+    switch(action.type){
+        case oc.ORDER_REQUEST_CANCEL_REQUEST:
+            return {
+                loading: true,
+            };
+        case oc.ORDER_REQUEST_CANCEL_SUCCESS:
+            return {
+                loading: false,
+                success: true,
+            };
+        case oc.ORDER_REQUEST_CANCEL_FAIL:
+            return {
+                loading: false,
+                error: action.payload,
+            };
+        case oc.ORDER_REQUEST_CANCEL_RESET:
+            return {};
+        default:
+            return state;
+
+    }
+}
+
 export const orderSumaryReducer = (state={loading: true, summary: {}}, action) => {
     switch(action.type){
         case oc.ORDER_SUMMARY_REQUEST:

@@ -103,33 +103,25 @@ export default function UserDashboardScreen(props) {
                                         <div className='min-30'>
                                             <div style={{textAlign: 'center'}}> <h1>Order Status</h1></div>
                                             {order.isDelivered ? (
-                                                <div className='order-status'><MessageBox variant="success">
-                                                    Delivered at {formatDate(order.deliveredAt)}
-                                                </MessageBox>
+                                                <div className='order-status'>
+                                                    <MessageBox variant="success">
+                                                        Delivered at {formatDate(order.deliveredAt)}
+                                                    </MessageBox>
                                                 </div>
-
                                             ) : (
-                                                <div className='order-status'><MessageBox variant="danger">
-                                                    Not Delivered<br />
-                                                    {userInfo.isAdmin && <Link to={`/order/${order._id}`}>Delivery Order Now</Link>}
-                                                </MessageBox>
+                                                <div className='order-status'>
+                                                    <MessageBox variant="danger">
+                                                        Not Delivered<br />
+                                                        {userInfo.isAdmin && <Link to={`/order/${order._id}`}>Delivery Order Now</Link>}
+                                                    </MessageBox>
                                                 </div>
 
                                             )}
-                                            {order.isPaid ? (
-                                                <div className='order-status'><MessageBox variant="success" >
-                                                    Paid at {formatDate(order.paidAt)}
+                                            <div className='order-status'>
+                                                <MessageBox variant="success" >
+                                                    Paid at {formatDate(order.createdAt)}
                                                 </MessageBox>
-                                                </div>
-
-                                            ) : (
-                                                <div className='order-status'><MessageBox variant="danger">
-                                                    Not Paid<br />
-                                                    {userInfo._id === order.user && <Link to={`/order/${order._id}`}>Pay Order Now</Link>}
-                                                </MessageBox>
-                                                </div>
-
-                                            )}
+                                            </div>
                                         </div>
                                         <div className='card cart-body col-2' >
                                             <Link to={`/order/${order._id}`} >

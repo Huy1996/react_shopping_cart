@@ -89,7 +89,7 @@ export default function CartScreen(props) {
             </div>  
             <div className='col-1'>
                 <div className='card card-body'>
-                    <ul>
+                    <ul className='none'>
                         <li>
                             <h2>
                                 Subtotal ({cartItems.reduce((a, c) => a + c.qty, 0)} item) : ${cartItems.reduce((a, c) => a + c.price * c.qty, 0)}

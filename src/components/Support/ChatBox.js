@@ -1,5 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import socketIOClient from 'socket.io-client';
+import "./Support.css"
 
 const ENDPOINT =
   window.location.host.indexOf('localhost') >= 0

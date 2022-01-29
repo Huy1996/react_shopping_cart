@@ -294,27 +294,6 @@ img.large {
   color: #fc0000;
 }
 
-.alert {
-  padding: 1rem;
-  border: 0.1rem solid transparent;
-  border-radius: 0.5rem;
-}
-
-.alert-info {
-  color: #2020a0;
-  background-color: #e0e0ff;
-}
-
-.alert-danger {
-  color: #a02020;
-  background-color: #ffe0e0;
-}
-
-.alert-success {
-  color: #20a020;
-  background-color: #eeffe0;
-}
-
 /* Form */
 .form {
   max-width: 60rem;
@@ -571,24 +550,7 @@ img.large {
   background-color: #e0e0f0;
 }
 
-/* Chatbox */
-
-.chatbox {
-  color: #000000;
-  position: fixed;
-  right: 1rem;
-  bottom: 1rem;
-}
-.chatbox ul {
-  overflow: scroll;
-  max-height: 20rem;
-}
-.chatbox li {
-  margin-bottom: 1rem;
-}
-.chatbox input {
-  width: calc(100% - 9rem);
-}
+/* Support */
 
 .support-users {
   background: #f0f0f0;
@@ -729,3 +691,4 @@ img.large {
   margin-bottom: 1rem;
   margin-left: 1rem;
 }
+
