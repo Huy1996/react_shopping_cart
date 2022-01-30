@@ -92,7 +92,8 @@ export default function SearchScreen(props) {
                                         className={'all'===category? 'active': ''} 
                                         to={getFilterUrl({category:'all'})}
                                     >
-                                        All
+                                        <input type="checkbox" checked={'all'===category? true: false}/> All 
+                                        
                                     </Link>
                                 </li>
                             {
@@ -102,7 +103,7 @@ export default function SearchScreen(props) {
                                         className={c===category? 'active': ''} 
                                         to={getFilterUrl({category:c})}
                                     >
-                                        {c}
+                                        <input type="checkbox" checked={c===category? true: false}/> {c}
                                     </Link>
                                 </li>
                             ))}
@@ -122,7 +123,7 @@ export default function SearchScreen(props) {
                                                     className={'all'===brand? 'active': ''}
                                                     to={getFilterUrl({brand:'all'})}
                                                 >
-                                                    All
+                                                    <input type="checkbox" checked={'all'===brand? true: false}/> All
                                                 </Link>
                                             </li>
                                             {
@@ -132,7 +133,7 @@ export default function SearchScreen(props) {
                                                             className={c===brand? 'active': ''}
                                                             to={getFilterUrl({brand:c})}
                                                         >
-                                                            {c}
+                                                            <input type="checkbox" checked={c===brand? true: false}/> {c}
                                                         </Link>
                                                     </li>
                                                 ))}

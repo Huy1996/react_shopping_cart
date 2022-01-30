@@ -89,18 +89,18 @@ export default function CartScreen(props) {
             </div>  
             <div className='col-1'>
                 <div className='card card-body'>
-                    <ul>
+                    <ul style={{ listStyleType: "none", padding: "0" }}>
                         <li>
                             <h2>
                                 Subtotal ({cartItems.reduce((a, c) => a + c.qty, 0)} item) : ${cartItems.reduce((a, c) => a + c.price * c.qty, 0)}
                             </h2>
                         </li>
-                        <li>
+                        </ul>
+                        
                             <button type="button" onClick={checkoutHandler} className="primary block" disabled={cartItems.length === 0}>
                                 Process to Checkout
                             </button>
-                        </li>
-                    </ul>
+                    
                 </div>
             </div>          
         </div>
