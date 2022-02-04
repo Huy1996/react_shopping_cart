@@ -1,20 +1,21 @@
-import Axios from 'axios';
 import React, { useEffect, useState } from 'react';
-import { PayPalButton } from 'react-paypal-button-v2';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link, useParams } from 'react-router-dom';
-import {cancelOrder, deliverOrder, detailsOrder, payOrder} from '../../actions/orderAction';
+import {cancelOrder, confirmCancelOrder, deliverOrder, detailsOrder, payOrder} from '../../actions/orderAction';
 import LoadingBox from '../../components/Loading/LoadingBox';
 import MessageBox from '../../components/Support/MessageBox';
-import {ORDER_DELIVER_RESET, ORDER_PAY_RESET, ORDER_REQUEST_CANCEL_RESET} from '../../constants/orderConstant';
+import {
+    ORDER_CANCEL_RESET,
+    ORDER_DELIVER_RESET,
+    ORDER_REQUEST_CANCEL_RESET
+} from '../../constants/orderConstant';
 import OrderItem from "../../components/Order/OrderItem";
 
 export default function OrderScreen(props) {
     const params = useParams();
     const {id: orderId} = params;
 
-
-    // Redux store section
+    /* Redux Store Section */
     const orderDetails = useSelector((state) => state.orderDetails);
     const { order, loading, error } = orderDetails;
 
@@ -27,24 +28,29 @@ export default function OrderScreen(props) {
     const orderRequestCancel = useSelector(state => state.orderRequestCancel);
     const { loading: loadingRequest, error: errorRequest, success: successRequest} = orderRequestCancel;
 
+    const orderConfirmCancel = useSelector(state => state.orderConfirmCancel);
+    const { loading: loadingCancel, error: errorCancel, success: successCancel} = orderConfirmCancel;
+
     const dispatch = useDispatch();
     useEffect(() => {
-        if (!order || successDeliver || successRequest ||(order && order._id !== orderId)) {
+        if (!order || successDeliver || successRequest||  successCancel ||(order && order._id !== orderId)) {
             dispatch({ 
                 type: ORDER_DELIVER_RESET 
             });
             dispatch({
                 type: ORDER_REQUEST_CANCEL_RESET
             })
+            dispatch({
+                type: ORDER_CANCEL_RESET,
+            })
             dispatch(detailsOrder(orderId));
         }
-      }, [dispatch, order, orderId, successDeliver, successRequest]);
-    
-    const successPaymentHandler = (paymentResult) => {
-        // TODO: dispatch pay order
-        dispatch(payOrder(order, paymentResult))
-    };
+      }, [dispatch, order, orderId, successDeliver, successRequest, successCancel]);
 
+
+
+
+    /* Handler Function Section */
     const deliverHandler = () => {
         dispatch(deliverOrder(order._id));
     };
@@ -52,6 +58,109 @@ export default function OrderScreen(props) {
     const cancelRequestHandler = () => {
         dispatch(cancelOrder(order._id));
     }
+
+    const confirmCancelHandler = () => {
+        dispatch(confirmCancelOrder(order._id));
+    }
+
+    /* Conditional Rendering Section */
+
+    const renderCancelButton = (order) => {
+        if(order.requestCancel) return;
+        if(userInfo._id === order.user){
+            return (
+                <>
+                    {loadingCancel && <LoadingBox />}
+                    {errorCancel && <MessageBox variant="danger">{errorCancel}</MessageBox>}
+                    <button type='button' onClick={cancelRequestHandler}>Cancel order</button>
+                </>
+            );
+        }
+    }
+
+    const renderDeliverButton = (order) => {
+        if(!userInfo.isAdmin) return;
+        if(order.isDelivered) return;
+        if(!order.isCanceled){
+            return (
+                <li>
+                    {loadingDeliver && (<LoadingBox />)}
+                    {errorDeliver && (<MessageBox variant="danger">{errorDeliver}</MessageBox>)}
+                    <button
+                        type='button'
+                        className='primary block'
+                        onClick={deliverHandler}
+                    >
+                        Deliver Order
+                    </button>
+                </li>
+            );
+        }
+    }
+
+
+    const renderConfirmButton = (order) => {
+        if(!userInfo.isAdmin) return;
+        if(order.isCanceled) return;
+        if(order.requestCancel){
+            return (
+                <>
+                    {loadingRequest && <LoadingBox />}
+                    {errorRequest && <MessageBox variant="danger">{errorRequest}</MessageBox>}
+                    <button type='button' onClick={confirmCancelHandler}>Confirm Cancel</button>
+                </>
+            );
+        }
+    }
+
+    const renderDeliverStatus = (order) => {
+
+        if(order.isDelivered && order.isCanceled){
+            return (
+                <MessageBox variant="danger">
+                    Order Returned
+                </MessageBox>
+            );
+        }
+        if(order.isCanceled){
+            return (
+                <MessageBox variant="danger">
+                    Order Canceled
+                </MessageBox>
+            );
+        }
+        if(order.requestCancel){
+            return (
+                <MessageBox variant="danger">
+                    Pending Cancel
+                </MessageBox>
+            )
+        }
+        if(order.isDelivered){
+            return (
+                <MessageBox variant="success">
+                    Delivered at {order.deliveredAt.substring(0, 10)}
+                </MessageBox>
+            );
+        }
+        return <MessageBox variant="danger">Not Delivered</MessageBox>;;
+    }
+
+
+    const renderPayStatus = (order) => {
+        if(order.isCanceled){
+            return <MessageBox variant="danger">Refunded</MessageBox>;
+        }
+        if(order.requestCancel){
+            return <MessageBox variant="danger">Refund pending</MessageBox>;
+        }
+        return(
+            <MessageBox variant="success">
+                Paid at {order.createdAt.substring(0, 10)}
+            </MessageBox>
+        );
+    }
+
 
     return loading ? (<LoadingBox />):
             error ? (<MessageBox variant="danger">{error}</MessageBox>)
@@ -68,15 +177,7 @@ export default function OrderScreen(props) {
                                     <strong>Name:</strong> {order.shippingAddress.fullName} <br />
                                     <strong>Address:</strong> {order.shippingAddress.address}, {order.shippingAddress.city}, {order.shippingAddress.postalCode}, {order.shippingAddress.country}                                    
                                 </p>
-                                {
-                                    order.isDelivered ? (
-                                        <MessageBox variant="success">
-                                            Delivered at {order.deliveredAt.substring(0, 10)}
-                                        </MessageBox>
-                                    ) : (
-                                        <MessageBox variant="danger">Not Delivered</MessageBox>
-                                    )
-                                }                                
+                                {renderDeliverStatus(order)}
                             </div>
                         </li>
                         <li>
@@ -85,9 +186,7 @@ export default function OrderScreen(props) {
                                 <p>
                                     <strong>Name:</strong> {order.paymentMethod}
                                 </p>
-                                <MessageBox variant="success">
-                                    Paid at {order.createdAt.substring(0, 10)}
-                                </MessageBox>
+                                {renderPayStatus(order)}
                             </div>
                         </li>
                         <li>
@@ -129,22 +228,9 @@ export default function OrderScreen(props) {
                                     </div>
                                 </div>
                             </li>
-                            {!order.requestCancel && userInfo._id === order.user && (<button type='button' onClick={cancelRequestHandler}>Cancel order</button>) }
-                            {order.requestCancel && !order.isCanceled && userInfo.isAdmin ?
-                                <button type='button'>Confirm Cancel</button> :
-                                userInfo.isAdmin && !order.isDelivered && (
-                                    <li>
-                                        {loadingDeliver && (<LoadingBox />)}
-                                        {errorDeliver && (<MessageBox variant="danger">{errorDeliver}</MessageBox>)}
-                                        <button
-                                            type='button'
-                                            className='primary block'
-                                            onClick={deliverHandler}
-                                        >
-                                            Deliver Order
-                                        </button>
-                                    </li>
-                            )}
+                            { renderCancelButton(order) }
+                            { renderConfirmButton(order) }
+                            { renderDeliverButton(order) }
                         </ul>
                     </div>
                 </div>
