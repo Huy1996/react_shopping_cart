@@ -88,6 +88,22 @@ export const cancelOrder = (orderId) => async (dispatch, getState) => {
     )
 }
 
+export const confirmCancelOrder = (orderId) => async (dispatch, getState) => {
+    const {userSignin:{userInfo}} = getState();
+    const url = `/api/orders/${orderId}/canceled`;
+    await fetching(
+        dispatch,
+        method.PUT,
+        url,
+        oc.ORDER_CANCEL_REQUEST,
+        oc.ORDER_CANCEL_SUCCESS,
+        oc.ORDER_CANCEL_FAIL,
+        {
+            header: {Authorization: `Bearer ${userInfo.token}`}
+        }
+    )
+}
+
 export const listOrderMine = ({pageNumber=''}) => async (dispatch, getState) => {
     const {userSignin:{userInfo}} = getState();
     const url = `/api/orders/mine?pageNumber=${pageNumber}`;
