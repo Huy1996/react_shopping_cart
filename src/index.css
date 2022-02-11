@@ -692,3 +692,11 @@ img.large {
   margin-left: 1rem;
 }
 
+.small {
+  width: 80px;
+  display: inline-block;
+}
+
+div .line{
+  display: inline-block;
+}

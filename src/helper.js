@@ -113,6 +113,20 @@ export const ratings = [
 
 export const shirtSize = ['XXS', 'XS', 'S', 'M', 'L', 'XL', 'XXL'];
 
+export const returnReason = [
+    "No longer needed",
+    "Inaccurate website description",
+    "Item defective or doesn't work",
+    "Brought by mistake",
+    "Better price available",
+    "Product damaged, but shipping box OK",
+    "Item arrived too late",
+    "Missing or broken parts",
+    "Product and shipping box both damaged",
+    "Wrong item was sent",
+    "Didn't approve purchase"
+]
+
 export const formatDate = (dateString) => {
     const options = { year: "numeric", month: "long", day: "numeric" }
     return new Date(dateString).toLocaleDateString(undefined, options)
@@ -122,4 +136,18 @@ export const dateDifference = (day1, day2) => {
     const t2 = day2.getTime();
     const t1 = day1.getTime();
     return Math.floor((t2-t1)/(24*3600*1000));
+}
+
+export const shallowEqual = (object1, object2) => {
+    const keys1 = Object.keys(object1);
+    const keys2 = Object.keys(object2);
+    if (keys1.length !== keys2.length) {
+        return false;
+    }
+    for (let key of keys1) {
+        if (object1[key] !== object2[key]) {
+            return false;
+        }
+    }
+    return true;
 }

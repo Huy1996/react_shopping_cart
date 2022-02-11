@@ -17,6 +17,7 @@ export default function ProductEditScreen(props) {
     const [image, setImage]                 = useState('');
     const [category, setCategory]           = useState('');
     const [countInStock, setCountInStock]   = useState('');
+    const [attribute, setAttribute]         = useState([]);
     const [brand, setBrand]                 = useState('');
     const [description, setDescription]     = useState('');
     
@@ -45,6 +46,7 @@ export default function ProductEditScreen(props) {
             setCategory(product.category);
             setCountInStock(product.countInStock);
             setBrand(product.brand);
+            setAttribute(product.attribute);
             setDescription(product.description);
         }
     }, [product, dispatch, productId, successUpdate, navigate]);
@@ -58,6 +60,7 @@ export default function ProductEditScreen(props) {
             image,
             category,
             brand,
+            attribute,
             countInStock,
             description
         }))
@@ -80,6 +83,7 @@ export default function ProductEditScreen(props) {
                         category={category}             setCategory={value => setCategory(value)}
                         countInStock={countInStock}     setCountInStock={value => setCountInStock(value)}
                         brand={brand}                   setBrand={value => setBrand(value)}
+                        attribute={attribute}           setAttribute={value => setAttribute(value)}
                         description={description}       setDescription={value => setDescription(value)}
                     />
             }

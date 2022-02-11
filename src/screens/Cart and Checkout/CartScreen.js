@@ -1,35 +1,33 @@
-import React, { useEffect } from 'react';
+import React, {useEffect, useState} from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link, useLocation, useNavigate, useParams } from 'react-router-dom';
 import {addToCart, editCart, removeFromCart} from '../../actions/cartAction';
 import MessageBox from '../../components/Support/MessageBox';
 
 export default function CartScreen(props) {
-    const params = useParams();
     const navigate = useNavigate();
-    const {id: productId} = params;
-
-    const { search } = useLocation();
-    const qtyInUrl = new URLSearchParams(search).get('qty');
-    const qty = qtyInUrl ? Number(qtyInUrl) : 1 ;
 
     const cart = useSelector((state) => state.cart);
     const { cartItems } = cart;
     const dispatch = useDispatch();
-    useEffect(() => {
-        if (productId) {
-            dispatch(addToCart(productId, qty));
-        }
-    }, [dispatch, productId, qty]);
+    useEffect(() => {},[dispatch]);
     
-    const removeFromCartHandler = (id) => {
+    const removeFromCartHandler = (id, options) => {
         // delete action
-        dispatch(removeFromCart(id))
+        dispatch(removeFromCart(id, options))
     };
     
     const checkoutHandler = () => {
         navigate('/signin?redirect=/shipping');
     };
+
+    const renderOption = (options) => {
+        if(JSON.stringify(options) === '{}') return;
+        const key = Object.keys(options);
+        let attribute = '';
+        key.map(k => {attribute += `${k}: ${options[k]}, `});
+        return <p>{attribute.slice(0, -2)}</p>
+    }
 
     return (
         <div className="row top">
@@ -50,15 +48,16 @@ export default function CartScreen(props) {
                                                     src={item.image} 
                                                     alt={item.name}
                                                     className="small"
-                                                ></img>                                                
+                                                />
                                             </div>
                                             <div className='min-30'>
                                                 <Link to={`/product/${item.product}`}>
                                                     {item.name}
                                                 </Link>
+                                                {renderOption(item.options)}
                                             </div>
                                             <div>
-                                                <select value={item.qty} onChange={e =>dispatch(editCart(item.product, Number(e.target.value)))}>
+                                                <select value={item.qty} onChange={e =>dispatch(editCart(item.product, Number(e.target.value), item.options))}>
                                                     {
                                                         [...Array(item.countInStock).keys()].map(x => (
                                                             <option 
@@ -75,7 +74,7 @@ export default function CartScreen(props) {
                                                 ${item.price}
                                             </div>
                                             <div>
-                                                <button type="button" onClick={() => removeFromCartHandler(item.product)}>
+                                                <button type="button" onClick={() => removeFromCartHandler(item.product, item.options)}>
                                                     Delete
                                                 </button>
                                             </div>

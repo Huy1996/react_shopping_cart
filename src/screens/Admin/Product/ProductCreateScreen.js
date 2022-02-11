@@ -17,6 +17,7 @@ function ProductCreateScreen(props) {
     const [category, setCategory]           = useState('');
     const [countInStock, setCountInStock]   = useState('');
     const [brand, setBrand]                 = useState('');
+    const [attribute, setAttribute]         = useState([]);
     const [description, setDescription]     = useState('');
 
     const productCreate = useSelector(state => state.productCreate);
@@ -43,6 +44,7 @@ function ProductCreateScreen(props) {
             image,
             category,
             brand,
+            attribute,
             countInStock,
             description
         }))
@@ -62,6 +64,7 @@ function ProductCreateScreen(props) {
                 image={image}                   setImage={value => setImage(value)}
                 category={category}             setCategory={value => setCategory(value)}
                 countInStock={countInStock}     setCountInStock={value => setCountInStock(value)}
+                attribute={attribute}           setAttribute={value => setAttribute(value)}
                 brand={brand}                   setBrand={value => setBrand(value)}
                 description={description}       setDescription={value => setDescription(value)}
             />
