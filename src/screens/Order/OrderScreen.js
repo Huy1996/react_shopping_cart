@@ -1,7 +1,7 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Link, useParams } from 'react-router-dom';
-import {cancelOrder, confirmCancelOrder, deliverOrder, detailsOrder, payOrder} from '../../actions/orderAction';
+import { useParams } from 'react-router-dom';
+import {cancelOrder, confirmCancelOrder, deliverOrder, detailsOrder } from '../../actions/orderAction';
 import LoadingBox from '../../components/Loading/LoadingBox';
 import MessageBox from '../../components/Support/MessageBox';
 import {
@@ -114,7 +114,6 @@ export default function OrderScreen(props) {
     }
 
     const renderDeliverStatus = (order) => {
-
         if(order.isDelivered && order.isCanceled){
             return (
                 <MessageBox variant="danger">
@@ -190,7 +189,7 @@ export default function OrderScreen(props) {
                             </div>
                         </li>
                         <li>
-                            <OrderItem order={order} />
+                            <OrderItem order={order.orderItems} />
                         </li>
                     </ul>
                 </div>

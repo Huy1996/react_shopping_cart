@@ -5,12 +5,14 @@ import {useSelector}            from "react-redux";
 import Axios                    from "axios";
 import ClassicEditor            from '@ckeditor/ckeditor5-build-classic';
 import { CKEditor }             from '@ckeditor/ckeditor5-react'
+import CreateAttribute from "./CreateAttribute";
+import Attribute from "./Attribute";
 
 function ProductEditor(props) {
 
     //
     const [loadingUpload, setLoadingUpload] = useState(false);
-    const [errorUpload, setErrorUpload] = useState('');
+    const [errorUpload, setErrorUpload]     = useState('');
 
     //
     const productCategoryList = useSelector(state => state.productCategoryList);
@@ -46,6 +48,20 @@ function ProductEditor(props) {
     const editorHandler = (event, editor) => {
         const data = editor.getData();
         props.setDescription(data);
+    }
+
+    const addAttribute = (newAttribute) => {
+        props.setAttribute(prevAttribute => {
+            return [...prevAttribute, newAttribute];
+        });
+    }
+
+    const deleteAttribute = (id) => {
+        props.setAttribute(prevAttribute => {
+            return prevAttribute.filter((attribute, index) => {
+                return index !== id;
+            });
+        });
     }
 
     return (
@@ -98,7 +114,6 @@ function ProductEditor(props) {
                                         id='imageFile'
                                         label="Choose Image"
                                         onChange={uploadFileHandler}
-                                        required={true}
                                     />
                                     {loadingUpload && (<LoadingBox />)}
                                     {errorUpload && (<MessageBox variant="danger">{errorUpload}</MessageBox>)}
@@ -135,7 +150,7 @@ function ProductEditor(props) {
                                     />
                                     <datalist id='brands'>
                                         {
-                                            brands.map((b) => (
+                                            brands && brands.map((b) => (
                                                 <option value={b} />
                                             ))
                                         }
@@ -151,6 +166,20 @@ function ProductEditor(props) {
                                         onChange={(e) => props.setCountInStock(e.target.value)}
                                         required={true}
                                     />
+                                </div>
+                                <CreateAttribute onAdd={addAttribute} />
+                                <div>
+                                    {props.attribute.map((attr, index) => {
+                                        return (
+                                            <Attribute
+                                                key={index}
+                                                id={index}
+                                                name={attr.name}
+                                                option={attr.options}
+                                                onDelete={deleteAttribute}
+                                            />
+                                        )
+                                    })}
                                 </div>
                                 <div>
                                     <label htmlFor='description'>Description</label>
@@ -168,7 +197,6 @@ function ProductEditor(props) {
                                         data={props.description}
                                         onChange={editorHandler}
                                     />
-
                                 </div>
                                 <div>
                                     <label></label>

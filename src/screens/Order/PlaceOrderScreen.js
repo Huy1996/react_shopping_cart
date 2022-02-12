@@ -1,7 +1,6 @@
 import React, {useEffect, useState} from 'react'
 import { useDispatch, useSelector } from 'react-redux';
-import { Link } from 'react-router-dom';
-import {createOrder, payOrder} from '../../actions/orderAction';
+import {createOrder} from '../../actions/orderAction';
 import CheckoutSteps from '../../components/Order/CheckoutSteps'
 import LoadingBox from '../../components/Loading/LoadingBox';
 import MessageBox from '../../components/Support/MessageBox';
@@ -9,6 +8,7 @@ import { ORDER_CREATE_RESET } from '../../constants/orderConstant';
 import { useNavigate } from 'react-router-dom';
 import Axios from "axios";
 import {PayPalButton} from "react-paypal-button-v2";
+import OrderItem from "../../components/Order/OrderItem";
 
 export default function PlaceOrderScreen(props) {
     const navigate = useNavigate();
@@ -30,13 +30,6 @@ export default function PlaceOrderScreen(props) {
     cart.taxPrice       = toPrice(0.1 * cart.itemsPrice);
     cart.totalPrice     = cart.itemsPrice + cart.shippingPrice + cart.taxPrice;
 
-    const placeOrderHandler = () => {
-        // Todo: dispatch place order
-        dispatch(createOrder({
-            ...cart, 
-            orderItems: cartItems,
-        }));
-    }
 
     const successPaymentHandler = (paymentResult) => {
         // TODO: dispatch pay order
@@ -87,7 +80,6 @@ export default function PlaceOrderScreen(props) {
                                 <p>
                                     <strong>Name:</strong> {shippingAddress.fullName} <br />
                                     <strong>Address:</strong> {shippingAddress.address}, {shippingAddress.city}, {shippingAddress.postalCode}, {shippingAddress.country}
-                                    
                                 </p>
                             </div>
                         </li>
@@ -100,34 +92,7 @@ export default function PlaceOrderScreen(props) {
                             </div>
                         </li>
                         <li>
-                            <div className='card card-body'>
-                                <h2>Order Items</h2>
-                                <ul>
-                                    {
-                                        cartItems.map((item) => (
-                                            <li key={item.product}>
-                                                <div className="row">
-                                                    <div>
-                                                        <img 
-                                                            src={item.image} 
-                                                            alt={item.name}
-                                                            className="small"
-                                                        />
-                                                    </div>
-                                                    <div className='min-30'>
-                                                        <Link to={`/product/${item.product}`}>
-                                                            {item.name}
-                                                        </Link>
-                                                    </div>                                            
-                                                    <div>
-                                                        {item.qty} x ${item.price.toFixed(2)} = ${(item.qty * item.price).toFixed(2)}
-                                                    </div>                                            
-                                                </div>
-                                            </li>
-                                        ))
-                                    }
-                                </ul>
-                            </div>
+                            <OrderItem order={cartItems} />
                         </li>
                     </ul>
                 </div>

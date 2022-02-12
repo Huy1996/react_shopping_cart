@@ -10,6 +10,7 @@ import { REVIEW_CREATE_RESET } from '../../constants/reviewConstant.js';
 import { useNavigate } from 'react-router-dom';
 import Review from "../../components/Review and Rating/Review";
 import ReviewEditor from "../../components/Review and Rating/ReviewEditor";
+import {addToCart} from "../../actions/cartAction";
 
 export default function ProductScreen(props) {
     const params                    = useParams();
@@ -20,6 +21,7 @@ export default function ProductScreen(props) {
 
     // Creating Hook
     const [qty, setQty]             = useState(1);
+    const [attribute, setAttribute] = useState({});
     const [rating, setRating]       = useState(0);
     const [comment, setComment]     = useState("");
 
@@ -50,17 +52,28 @@ export default function ProductScreen(props) {
             setRating('');
             setComment('');
         }
-
         dispatch({
             type: REVIEW_CREATE_RESET,
         })
         dispatch(detailsProduct(productId));
         dispatch(listReviewProduct(productId));
-    }, [dispatch, productId, successReviewCreate, successUpdate, successDelete])
+    }, [dispatch, productId, successReviewCreate, successUpdate, successDelete]);
 
+    useEffect(() => {
+        if(product && product.attribute.length !==0){
+            let temp = {};
+            product.attribute.map((x) => {temp = {...temp, [x.name]: x.options[0]}});
+            setAttribute(temp);
+        }
+        else{
+            setAttribute({});
+        }
+    },[product]);
 
     const addToCartHandler = () => {
-        navigate(`/cart/${productId}?qty=${qty}`)
+        dispatch(addToCart(productId, qty, attribute))
+        setAttribute({});
+        navigate(`/cart`);
     }
 
     const submitHandler = (e) => {
@@ -73,6 +86,37 @@ export default function ProductScreen(props) {
             alert('Please enter comment and rating')
         }
     };
+
+    const renderOption = () => {
+        if(product.attribute.length !== 0){
+            return (
+                product.attribute.map(attr => (
+                    <li>
+                        <div className='row'>
+                            <div>{attr.name}</div>
+                            <div>
+                                <select
+                                    value={attribute[attr.name]}
+                                    onChange={e => setAttribute({...attribute, [attr.name]: e.target.value})}
+                                >
+                                    {
+                                        attr.options.map(x => (
+                                            <option
+                                                key={x}
+                                                value={x}
+                                            >
+                                                {x}
+                                            </option>
+                                        ))
+                                    }
+                                </select>
+                            </div>
+                        </div>
+                    </li>
+                ))
+            )
+        }
+    }
 
     return (
         <div>
@@ -150,6 +194,7 @@ export default function ProductScreen(props) {
                                                                     </div>
                                                                 </div>
                                                             </li>
+                                                            {renderOption()}
                                                             <li>
                                                                 <button
                                                                     className='primary block'
