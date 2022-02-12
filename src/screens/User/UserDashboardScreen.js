@@ -128,7 +128,7 @@ export default function UserDashboardScreen(props) {
                                                 <h3 id='order-id'>Order ID: {order._id}</h3>
                                             </Link>
                                             <p id='order-date'>ORDER PLACED: {formatDate(order.createdAt)}</p>
-                                            <OrderItem order={order}/>
+                                            <OrderItem order={order.orderItems}/>
                                         </div>
                                     </div>
                                 ))}

@@ -5,7 +5,7 @@ function OrderItem(props) {
 
     const renderOption = (options) => {
         console.log(options);
-        if(JSON.stringify(options) === '{}') return;
+        if(!options || JSON.stringify(options) === '{}') return;
         const key = Object.keys(options);
         let attribute = '';
         key.map(k => {attribute += `${k}: ${options[k]}, `});
