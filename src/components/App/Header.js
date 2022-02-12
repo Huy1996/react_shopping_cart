@@ -35,7 +35,7 @@ export default function Header(props) {
                 <SearchBox />
             </div>
             <div>
-                <Link to="/cart">
+                <Link className="red" to="/cart">
                     <i className="fas fa-shopping-cart" /> Cart
                     {cartItems.length > 0 && (
                         <span className="badge">{cartItems.length}</span>

@@ -116,7 +116,7 @@ export default function SupportScreen() {
         {users.filter((x) => x._id !== userInfo._id).length === 0 && (
           <MessageBox>No Online User Found</MessageBox>
         )}
-        <ul>
+        <ul className="none">
           {users
             .filter((x) => x._id !== userInfo._id)
             .map((user) => (
@@ -148,7 +148,7 @@ export default function SupportScreen() {
             <div className="row">
               <strong>Chat with {selectedUser.name} </strong>
             </div>
-            <ul ref={uiMessagesRef}>
+            <ul className="none" ref={uiMessagesRef}>
               {messages.length === 0 && <li>No message.</li>}
               {messages.map((msg, index) => (
                 <li key={index}>
