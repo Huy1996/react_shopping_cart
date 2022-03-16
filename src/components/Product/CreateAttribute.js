@@ -24,7 +24,7 @@ function CreateAttribute(props) {
     }
 
     return (
-        <div>
+        <div className="card card-body">
             <label htmlFor="attribute-name">Attribute Name</label>
             <input
                 id="attribute-name"
@@ -33,14 +33,19 @@ function CreateAttribute(props) {
                 placeholder="Enter Attribute Name"
             />
             <label htmlFor='option'>Option: {options.map(opt => {return `${opt} `})}</label>
-            <input
-                id="option"
-                value={option}
-                onChange={event => {setOption(event.target.value)}}
-                placeholder="Enter Option Name"
-            />
-            <button type='button' onClick={submitHandler}>Add</button>
-            <button type='button' onClick={addAttribute}>Add</button>
+            <div className="row">
+                <input
+                    id="option"
+                    value={option}
+                    className="col-1"
+                    onChange={event => {setOption(event.target.value)}}
+                    placeholder="Enter Option Name"
+                />
+                <button type='button' onClick={submitHandler}>Add</button>
+            </div>
+            <label/>
+            <button type='button' className="primary" onClick={addAttribute}>Add</button>
+
         </div>
     );
 }

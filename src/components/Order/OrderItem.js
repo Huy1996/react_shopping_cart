@@ -12,9 +12,18 @@ function OrderItem(props) {
         return <p>{attribute.slice(0, -2)}</p>
     }
 
+    const renderHeading = () => {
+        if(props.noBorder){
+            return <></>
+        }
+        else{
+            return <h2 style={{paddingTop: '0'}}>Order Items</h2>
+        }
+    }
+
     return (
-        <div className='card card-body'>
-            <h2 style={{paddingTop: '0'}}>Order Items</h2>
+        <div className={props.noBorder ? '' : 'card card-body'}>
+            {renderHeading()}
             <ul>
                 {
                     props.order.map((item) => (

@@ -169,17 +169,19 @@ function ProductEditor(props) {
                                 </div>
                                 <CreateAttribute onAdd={addAttribute} />
                                 <div>
-                                    {props.attribute.map((attr, index) => {
-                                        return (
-                                            <Attribute
-                                                key={index}
-                                                id={index}
-                                                name={attr.name}
-                                                option={attr.options}
-                                                onDelete={deleteAttribute}
-                                            />
-                                        )
-                                    })}
+                                    <div className="row top">
+                                        {props.attribute.map((attr, index) => {
+                                            return (
+                                                <Attribute
+                                                    key={index}
+                                                    id={index}
+                                                    name={attr.name}
+                                                    option={attr.options}
+                                                    onDelete={deleteAttribute}
+                                                />
+                                            )
+                                        })}
+                                    </div>
                                 </div>
                                 <div>
                                     <label htmlFor='description'>Description</label>

@@ -1,6 +1,7 @@
 import React from 'react';
 import {useSelector} from "react-redux";
 import ChatBox from "../Support/ChatBox";
+import "./App.css"
 
 function Footer(props) {
 

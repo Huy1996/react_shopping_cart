@@ -7,6 +7,7 @@ import LoadingBox from "../Loading/LoadingBox";
 import {REVIEW_DELETE_RESET, REVIEW_UPDATE_RESET} from "../../constants/reviewConstant";
 import ReviewEditor from "./ReviewEditor";
 import {formatDate} from "../../helper";
+import "./Review and Rating.css"
 
 export default function Review(props) {
     const [edit, setEdit]           = useState(false);
@@ -59,7 +60,7 @@ export default function Review(props) {
     return (
         <div className='col-2 card cart-body'>
             <div
-                style={{backgroundColor: '#D9D7F1'}}
+                style={{backgroundColor: '#9ADCFF'}}
                 className="row"
             >
                 <div className='review-body'>

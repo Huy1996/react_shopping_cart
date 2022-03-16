@@ -33,7 +33,7 @@ export const productCategoryListReducer = (state = { loading: true, products: []
         case pc.PRODUCT_CATEGORY_LIST_SUCCESS:
             return {
                 loading:    false,
-                categories:   action.payload
+                categories: action.payload
             };
         case pc.PRODUCT_CATEGORY_LIST_FAIL:
             return {

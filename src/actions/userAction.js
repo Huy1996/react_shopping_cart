@@ -62,7 +62,7 @@ export const detailsUser = (userId) => async (dispatch, getState) => {
         url,
         uc.USER_DETAILS_REQUEST,
         uc.USER_DETAILS_SUCCESS,
-        uc.USER_DELETE_FAIL,
+        uc.USER_DETAILS_FAIL,
         {
             header: {Authorization: `Bearer ${userInfo.token}`}
         }

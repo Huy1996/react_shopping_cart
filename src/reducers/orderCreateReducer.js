@@ -1,4 +1,5 @@
 import * as oc from "../constants/orderConstant";
+import {CART_ITEMS} from '../constants/storageConstant';
 
 export const orderCreateReducer = (state={}, action) => {
     switch(action.type){
@@ -7,7 +8,7 @@ export const orderCreateReducer = (state={}, action) => {
                 loading: true,
             };
         case oc.ORDER_CREATE_SUCCESS:
-            localStorage.removeItem('cartItems');
+            localStorage.removeItem(CART_ITEMS);
             return {
                 loading: false,
                 success: true,
