@@ -3,6 +3,7 @@ import {Link} from 'react-router-dom';
 import {useDispatch, useSelector} from "react-redux";
 import SearchBox from "./SearchBox";
 import {signout} from "../../actions/userAction";
+import "./App.css"
 
 export default function Header(props) {
 

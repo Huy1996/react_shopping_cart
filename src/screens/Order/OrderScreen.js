@@ -72,7 +72,13 @@ export default function OrderScreen(props) {
                 <>
                     {loadingCancel && <LoadingBox />}
                     {errorCancel && <MessageBox variant="danger">{errorCancel}</MessageBox>}
-                    <button type='button' onClick={cancelRequestHandler}>Cancel order</button>
+                    <button
+                        type='button'
+                        className='primary block'
+                        onClick={cancelRequestHandler}
+                    >
+                        Cancel order
+                    </button>
                 </>
             );
         }
@@ -107,7 +113,13 @@ export default function OrderScreen(props) {
                 <>
                     {loadingRequest && <LoadingBox />}
                     {errorRequest && <MessageBox variant="danger">{errorRequest}</MessageBox>}
-                    <button type='button' onClick={confirmCancelHandler}>Confirm Cancel</button>
+                    <button
+                        type='button'
+                        className='primary block'
+                        onClick={confirmCancelHandler}
+                    >
+                        Confirm Cancel
+                    </button>
                 </>
             );
         }
@@ -227,6 +239,7 @@ export default function OrderScreen(props) {
                                     </div>
                                 </div>
                             </li>
+                            <label />
                             { renderCancelButton(order) }
                             { renderConfirmButton(order) }
                             { renderDeliverButton(order) }

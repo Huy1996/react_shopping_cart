@@ -1,4 +1,5 @@
 import React from 'react'
+import "./Review and Rating.css"
 
 export default function Rating(props) {
     const {rating, numReviews, caption} = props;

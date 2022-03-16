@@ -38,6 +38,72 @@ export default function UserDashboardScreen(props) {
 
     },[dispatch, navigate, id])
 
+    const renderReview = () => {
+        if(loadingReview) return <LoadingBox />;
+        if(errorReview) return <MessageBox variant='danger' >{errorReview}</MessageBox>;
+        if(countReview === 0) return <MessageBox>{user.name} haven't posted any product reviews.</MessageBox>;
+        else{
+            return <>
+                {reviews.map((review) => (
+                    <div className='row col card cart-body'>
+                        <div className=' col-1 review-product'>
+                            <Link to={`/product/${review.product._id}`}>
+                                <h1 className='product-name'>{review.product.name}</h1>
+                                {/* <Rating rating={review.rating} caption=" "/> */}
+                            </Link>
+                            <img src={review.product.image} className='small'/>
+                        </div>
+                        <div className='col-3'>
+                            <Review review={review} name={false} />
+                        </div>
+                    </div>))}
+                </>
+        }
+    }
+
+    const renderOrder = () => {
+        if(loadingOrder) return <LoadingBox/>;
+        if(errorOrder) return <MessageBox variant='danger'>{errorOrder}</MessageBox>;
+        if(countOrder === 0) return <MessageBox>{user.name} haven't purchased anything.</MessageBox>;
+        else{
+            return <>
+                {orders.map((order) =>(
+                    <div className='row col card cart-body'>
+                        <div className='min-30'>
+                            <div style={{textAlign: 'center'}}> <h1>Order Status</h1></div>
+                            {order.isDelivered ? (
+                                <div className='order-status'>
+                                    <MessageBox variant="success">
+                                        Delivered at {formatDate(order.deliveredAt)}
+                                    </MessageBox>
+                                </div>
+                            ) : (
+                                <div className='order-status'>
+                                    <MessageBox variant="danger">
+                                        Not Delivered<br />
+                                        {userInfo.isAdmin && <Link to={`/order/${order._id}`}>Delivery Order Now</Link>}
+                                    </MessageBox>
+                                </div>
+
+                            )}
+                            <div className='order-status'>
+                                <MessageBox variant="success" >
+                                    Paid at {formatDate(order.createdAt)}
+                                </MessageBox>
+                            </div>
+                        </div>
+                        <div className='card cart-body col-2' >
+                            <Link to={`/order/${order._id}`} >
+                                <h3 id='order-id'>Order ID: {order._id}</h3>
+                            </Link>
+                            <p id='order-date'>ORDER PLACED: {formatDate(order.createdAt)}</p>
+                            <OrderItem order={order.orderItems} noBorder={true}/>
+                        </div>
+                    </div>
+                ))}
+            </>
+        }
+    }
 
     return (
         loading ? (<LoadingBox />)
@@ -46,9 +112,9 @@ export default function UserDashboardScreen(props) {
             <div>
                 <div className='row col'>
                     <div className='col-1'>
-                        <h3>{user.name} <button type='button' style={{borderRadius:"100%"}}><i className="fas fa-user-cog" /></button></h3>
-                        <h2>Email: {user.email}</h2>
-                        <h2>User Type: {user.isAdmin ? user.email === "admin@example.com" ? 'Admin' : 'Co-Admin' : 'Customer'}</h2>
+                        <h2 style={{ fontSize: "3.5rem" }}>{user.name}</h2>
+                        <h2 style={{ fontSize: "3.5rem" }}>Email: {user.email}</h2>
+                        <h2 style={{ fontSize: "3.5rem" }}>User Type: {user.isAdmin ? user.email === "admin@example.com" ? 'Admin' : 'Co-Admin' : 'Customer'}</h2>
                     </div>
                 </div>
                 <ul className='row summary none'>
@@ -73,65 +139,33 @@ export default function UserDashboardScreen(props) {
                         </div>
                     </li>
                 </ul>
-                <div className='card cart-body'>
-                    <h3 style={{marginLeft: '1rem'}} >Reviews</h3>
-                    {loadingReview ? <LoadingBox /> :
-                        errorReview ? <MessageBox variant='danger' >{errorReview}</MessageBox> :
-                            countReview === 0 ? <MessageBox>{user.name} haven't posted any product reviews.</MessageBox> :
-                                reviews.map((review) => (
-                                    <div className='row col card cart-body'>
-                                        <div className=' col-1 review-product'>
-                                            <Link to={`/product/${review.product._id}`}>
-                                                <h1 className='product-name'>{review.product.name}</h1>
-                                                {/* <Rating rating={review.rating} caption=" "/> */}
-                                            </Link>
-                                            <img src={review.product.image} className='small'/>
-                                        </div>
-                                        <div className='col-3'>
-                                            <Review review={review} name={false} />
-                                        </div>
-                                    </div>
-                                ))}
+                <div>
+                    <h3
+                        style={{
+                            textAlign: "center",
+                            fontSize: "3rem",
+                            paddingBottom: "1rem",
+                            borderBottom: "4px solid black",
+                            margin: "4rem 0 0 0"
+                        }}
+                    >
+                        Reviews
+                    </h3>
+                    {renderReview()}
                 </div>
-                <div className='card cart-body'>
-                    <h3 style={{marginLeft: '1rem'}}>Orders</h3>
-                    {loadingOrder ? <LoadingBox/> :
-                        errorOrder ? <MessageBox variant='danger'>{errorOrder}</MessageBox> :
-                            countOrder === 0 ? <MessageBox>{user.name} haven't purchased anything.</MessageBox> :
-                                orders.map((order) =>(
-                                    <div className='row col card cart-body'>
-                                        <div className='min-30'>
-                                            <div style={{textAlign: 'center'}}> <h1>Order Status</h1></div>
-                                            {order.isDelivered ? (
-                                                <div className='order-status'>
-                                                    <MessageBox variant="success">
-                                                        Delivered at {formatDate(order.deliveredAt)}
-                                                    </MessageBox>
-                                                </div>
-                                            ) : (
-                                                <div className='order-status'>
-                                                    <MessageBox variant="danger">
-                                                        Not Delivered<br />
-                                                        {userInfo.isAdmin && <Link to={`/order/${order._id}`}>Delivery Order Now</Link>}
-                                                    </MessageBox>
-                                                </div>
-
-                                            )}
-                                            <div className='order-status'>
-                                                <MessageBox variant="success" >
-                                                    Paid at {formatDate(order.createdAt)}
-                                                </MessageBox>
-                                            </div>
-                                        </div>
-                                        <div className='card cart-body col-2' >
-                                            <Link to={`/order/${order._id}`} >
-                                                <h3 id='order-id'>Order ID: {order._id}</h3>
-                                            </Link>
-                                            <p id='order-date'>ORDER PLACED: {formatDate(order.createdAt)}</p>
-                                            <OrderItem order={order.orderItems}/>
-                                        </div>
-                                    </div>
-                                ))}
+                <div>
+                    <h3
+                        style={{
+                            textAlign: "center",
+                            fontSize: "3rem",
+                            paddingBottom: "1rem",
+                            borderBottom: "4px solid black",
+                            margin: "4rem 0 0 0"
+                    }}
+                    >
+                        Orders
+                    </h3>
+                    {renderOrder()}
                 </div>
             </div>
             )

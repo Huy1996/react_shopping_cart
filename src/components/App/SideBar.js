@@ -4,6 +4,7 @@ import LoadingBox from "../Loading/LoadingBox";
 import MessageBox from "../Support/MessageBox";
 import {useDispatch, useSelector} from "react-redux";
 import {listProductsBrands, listProductsCategories} from "../../actions/productAction";
+import "./App.css"
 
 export default function SideBar(props) {
 
@@ -25,9 +26,7 @@ export default function SideBar(props) {
         <aside className={props.open ? 'open' : ''} >
             <ul className="categories none">
                 <button
-                    style={{
-                        position: 'absolute',
-                        right: 0}}
+                    className='close-sidebar'
                     onClick={() => props.closeSideBar(false)}
                 >
                     <i className="fa fa-close" />

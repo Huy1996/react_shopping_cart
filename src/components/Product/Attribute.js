@@ -2,10 +2,10 @@ import React from 'react';
 
 function Attribute(props) {
     return (
-        <div>
+        <div className="card card-body" style={{width: "23rem"}}>
             <h1>{props.name}</h1>
             <p>Option: {props.option.map(opt => {return `${opt} `})}</p>
-            <button type='button' onClick={() => {props.onDelete(props.id);}}>DELETE</button>
+            <button type='button' className="primary" onClick={() => {props.onDelete(props.id);}}>DELETE</button>
         </div>
     );
 }
