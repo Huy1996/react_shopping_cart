@@ -6,6 +6,7 @@ import LoadingBox from '../../components/Loading/LoadingBox';
 import MessageBox from '../../components/Support/MessageBox';
 import { ORDER_DELETE_RESET } from '../../constants/orderConstant';
 import { useNavigate } from 'react-router-dom';
+import Status from "../../components/Support/Status";
 
 export default function OrderListScreen(props) {    
     const navigate = useNavigate();
@@ -31,6 +32,21 @@ export default function OrderListScreen(props) {
         }
     }
 
+    const status = (order) => {
+        if(order.isCanceled){
+            return <Status variant='danger'>Cancelled</Status>
+        }
+        if(order.requestCancel){
+            return <Status variant='warning'>Pending Cancel</Status>
+        }
+        if(order.isDelivered){
+            return <Status variant='success'>Delivered</Status>
+        }
+        else{
+            return <Status variant='warning'>Processing</Status>
+        }
+    }
+
     return (
         <div>
             <h1>Orders</h1>
@@ -48,7 +64,7 @@ export default function OrderListScreen(props) {
                                 <th>USER</th>
                                 <th>DATE</th>
                                 <th>TOTAL</th>
-                                <th>DELIVERED</th>
+                                <th>STATUS</th>
                                 <th>ACTIONS</th>
                             </tr>
                         </thead>
@@ -60,7 +76,7 @@ export default function OrderListScreen(props) {
                                         <td>{order.user ? order.user.name : "Deleted User"}</td>
                                         <td>{order.createdAt.substring(0, 10)}</td>
                                         <td>$ {order.totalPrice.toFixed(2)}</td>
-                                        <td>{order.isDelivered ? order.deliveredAt.substring(0, 10) : 'No'}</td>
+                                        <td>{status(order)}</td>
                                         <td>
                                             <button 
                                                 type='button' 

@@ -36,9 +36,9 @@ export default function ScreenContainer(props) {
             <Route path="/shipping"                                                                                                                element={<ShippingAddressScreen/>}                        />
             <Route path="/payment"                                                                                                                 element={<PaymentMethodScreen/>}                          />
             <Route path="/placeorder"                                                                                                              element={<PlaceOrderScreen/>}                             />
-            <Route path="/order/:id"                                                                                                               element={<OrderScreen/>}                                  />
-            <Route path="/orderhistory"                                                                                                            element={<OrderHistoryScreen/>}                           />
-            <Route path="/orderhistory/pageNumber/:pageNumber"                                                                                     element={<OrderHistoryScreen/>}                           />
+            <Route path="/order/:id"                                                                                                               element={<Private><OrderScreen/></Private>}               />
+            <Route path="/orderhistory"                                                                                                            element={<Private><OrderHistoryScreen/></Private>}        />
+            <Route path="/orderhistory/pageNumber/:pageNumber"                                                                                     element={<Private><OrderHistoryScreen/></Private>}        />
             <Route path="/search/name"                                                                                                             element={<SearchScreen/>}                           exact />
             <Route path="/search/name/:name"                                                                                                       element={<SearchScreen/>}                           exact />
             <Route path="/search/category/:category"                                                                                               element={<SearchScreen/>}                           exact />

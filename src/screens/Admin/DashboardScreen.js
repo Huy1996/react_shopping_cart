@@ -57,7 +57,17 @@ export default function DashboardScreen() {
                     </ul>
                     <div>
                         <div>
-                            <h2>Sales</h2>
+                            <h3
+                                style={{
+                                    textAlign: "center",
+                                    fontSize: "3rem",
+                                    paddingBottom: "1rem",
+                                    borderBottom: "4px solid black",
+                                    margin: "4rem 0 0 0"
+                                }}
+                            >
+                                Sales
+                            </h3>
                             {
                                 summary.dailyOrders.length === 0 ? (
                                     <MessageBox>No Sale</MessageBox>
@@ -76,7 +86,17 @@ export default function DashboardScreen() {
                             }
                         </div>
                         <div>
-                            <h2>Categories</h2>
+                            <h3
+                                style={{
+                                    textAlign: "center",
+                                    fontSize: "3rem",
+                                    paddingBottom: "1rem",
+                                    borderBottom: "4px solid black",
+                                    margin: "4rem 0 0 0"
+                                }}
+                            >
+                                Categories
+                            </h3>
                             {
                                 summary.productCategories.length === 0 ? (
                                     <MessageBox>No Category</MessageBox>
