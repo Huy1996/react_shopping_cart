@@ -1,7 +1,7 @@
 {
   "name": "react_shopping_cart",
   "proxy": "https://shopping-cart-api-195.herokuapp.com/",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "private": true,
   "dependencies": {
     "@ckeditor/ckeditor5-build-classic": "^31.1.0",
