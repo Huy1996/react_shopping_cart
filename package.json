@@ -1,6 +1,6 @@
 {
+  "homepage": "http://chtq-shopping.com/",
   "name": "react_shopping_cart",
-  "proxy": "https://shopping-cart-api-195.herokuapp.com/",
   "version": "1.0.0",
   "private": true,
   "dependencies": {
@@ -33,7 +33,7 @@
   },
   "scripts": {
     "start": "react-scripts start",
-    "build": "export NODE_OPTIONS='--max-old-space-size=8192' && react-scripts build",
+    "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },

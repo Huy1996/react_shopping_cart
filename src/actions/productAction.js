@@ -13,7 +13,7 @@ export const listProducts = ({
                                  rating=0,
                                  order=''
 }) => async (dispatch) => {
-    const url = `/api/products?pageNumber=${pageNumber}&name=${name}&category=${category}&brand=${brand}&min=${min}&max=${max}&rating=${rating}&order=${order}`;
+    const url = method.URL + `/api/products?pageNumber=${pageNumber}&name=${name}&category=${category}&brand=${brand}&min=${min}&max=${max}&rating=${rating}&order=${order}`;
     await fetching(
                 dispatch,
                 method.GET,
@@ -25,7 +25,7 @@ export const listProducts = ({
 }
 
 export const detailsProduct = (productId) => async (dispatch) => {
-    const url = `/api/products/${productId}`;
+    const url = method.URL + `/api/products/${productId}`;
     await fetching(
                 dispatch,
                 method.GET,
@@ -38,7 +38,7 @@ export const detailsProduct = (productId) => async (dispatch) => {
 /*
 export const createProduct = () => async (dispatch, getState) => {
     const { userSignin:{userInfo} } = getState();
-    const url = '/api/products';
+    const url = method.URL + '/api/products';
     await fetching(
         dispatch,
         method.POST,
@@ -54,7 +54,7 @@ export const createProduct = () => async (dispatch, getState) => {
 
 export const createProduct = (product) => async (dispatch, getState) => {
     const { userSignin:{userInfo} } = getState();
-    const url = '/api/products';
+    const url = method.URL + '/api/products';
     await fetching(
         dispatch,
         method.POST,
@@ -71,7 +71,7 @@ export const createProduct = (product) => async (dispatch, getState) => {
 
 export const updateProduct = (product) => async (dispatch, getState) => {
     const { userSignin:{userInfo} } = getState();
-    const url = `/api/products/${product._id}`;
+    const url = method.URL + `/api/products/${product._id}`;
     await fetching(
         dispatch,
         method.PUT,
@@ -88,7 +88,7 @@ export const updateProduct = (product) => async (dispatch, getState) => {
 
 export const deleteProduct = (productId) => async (dispatch, getState) => {
     const { userSignin:{userInfo} } = getState();
-    const url = `/api/products/${productId}`;
+    const url = method.URL + `/api/products/${productId}`;
     await fetching(
         dispatch,
         method.DELETE,
@@ -103,7 +103,7 @@ export const deleteProduct = (productId) => async (dispatch, getState) => {
 }
 
 export const listProductsCategories = () => async (dispatch) => {
-    const url = `/api/products/categories`;
+    const url = method.URL + `/api/products/categories`;
     await fetching(
         dispatch,
         method.GET,
@@ -115,7 +115,7 @@ export const listProductsCategories = () => async (dispatch) => {
 }
 
 export const listProductsBrands = () => async (dispatch) => {
-    const url = `/api/products/brands`;
+    const url = method.URL + `/api/products/brands`;
     await fetching(
         dispatch,
         method.GET,
@@ -128,7 +128,7 @@ export const listProductsBrands = () => async (dispatch) => {
 
 export const createReview = (productId, review) => async (dispatch, getState) => {
     const { userSignin:{userInfo} } = getState();
-    const url = `/api/products/${productId}/reviews`;
+    const url = method.URL + `/api/products/${productId}/reviews`;
     await fetching(
         dispatch,
         method.POST,

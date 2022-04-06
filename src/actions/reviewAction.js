@@ -5,7 +5,7 @@ import * as oc from "../constants/orderConstant";
 import {REVIEW_USER_LIST_REQUEST} from "../constants/reviewConstant";
 
 export const listReviewProduct = (productId) => async (dispatch) => {
-    const url = `/api/reviews/product/${productId}`;
+    const url = method.URL + `/api/reviews/product/${productId}`;
     await fetching(
         dispatch,
         method.GET,
@@ -18,7 +18,7 @@ export const listReviewProduct = (productId) => async (dispatch) => {
 
 export const listReviewUser = ({pageNumber='', userId}) => async (dispatch, getState) => {
     const {userSignin:{userInfo}} = getState();
-    const url = `/api/reviews/user/${userId}?pageNumber=${pageNumber}`;
+    const url = method.URL + `/api/reviews/user/${userId}?pageNumber=${pageNumber}`;
     await fetching(
         dispatch,
         method.GET,
@@ -34,7 +34,7 @@ export const listReviewUser = ({pageNumber='', userId}) => async (dispatch, getS
 
 export const deleteReview = (reviewId) => async (dispatch, getState) => {
     const { userSignin:{userInfo} } = getState();
-    const url = `/api/reviews/${reviewId}`;
+    const url = method.URL + `/api/reviews/${reviewId}`;
     await fetching(
         dispatch,
         method.DELETE,
@@ -50,7 +50,7 @@ export const deleteReview = (reviewId) => async (dispatch, getState) => {
 
 export const createReview = (productId, review) => async (dispatch, getState) => {
     const { userSignin:{userInfo} } = getState();
-    const url = `/api/reviews/${productId}`;
+    const url = method.URL + `/api/reviews/${productId}`;
     await fetching(
         dispatch,
         method.POST,
@@ -67,7 +67,7 @@ export const createReview = (productId, review) => async (dispatch, getState) =>
 
 export const updateReview = (reviewId, review) => async (dispatch, getState) => {
     const { userSignin:{userInfo} } = getState();
-    const url = `/api/reviews/${reviewId}`;
+    const url = method.URL + `/api/reviews/${reviewId}`;
     await fetching(
         dispatch,
         method.PUT,
