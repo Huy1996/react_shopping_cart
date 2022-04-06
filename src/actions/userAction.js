@@ -5,7 +5,7 @@ import * as sc from '../constants/storageConstant'
 import {CART_EMPTY} from "../constants/cartConstant";
 
 export const signin = (email, password) => async (dispatch) => {
-    const url = method.URL + '/api/users/signin';
+    const url = '/api/users/signin';
     await fetching(
         dispatch,
         method.POST,
@@ -23,7 +23,7 @@ export const signin = (email, password) => async (dispatch) => {
 }
 
 export const  register = (name, email, password) => async (dispatch) => {
-    const url = method.URL + '/api/users/register';
+    const url = '/api/users/register';
     await fetching(
         dispatch,
         method.POST,
@@ -55,7 +55,7 @@ export const signout = () => (dispatch) => {
 
 export const detailsUser = (userId) => async (dispatch, getState) => {
     const {userSignin:{userInfo}} = getState();
-    const url = method.URL + `/api/users/${userId}`;
+    const url = `/api/users/${userId}`;
     fetching(
         dispatch,
         method.GET,
@@ -71,7 +71,7 @@ export const detailsUser = (userId) => async (dispatch, getState) => {
 
 export const updateUserProfile = (user) => async (dispatch, getState) => {
     const {userSignin:{userInfo}} = getState();
-    const url = method.URL + `/api/users/profile`;
+    const url = `/api/users/profile`;
     await fetching(
         dispatch,
         method.PUT,
@@ -92,7 +92,7 @@ export const updateUserProfile = (user) => async (dispatch, getState) => {
 
 export const listUsers = ({pageNumber=''}) => async (dispatch, getState) => {
     const {userSignin:{userInfo}} = getState();
-    const url = method.URL + `/api/users?pageNumber=${pageNumber}`;
+    const url = `/api/users?pageNumber=${pageNumber}`;
     fetching(
         dispatch,
         method.GET,
@@ -108,7 +108,7 @@ export const listUsers = ({pageNumber=''}) => async (dispatch, getState) => {
 
 export const deleteUser = (userId) => async(dispatch, getState) => {
     const {userSignin:{userInfo}} = getState();
-    const url = method.URL + `/api/users/${userId}`;
+    const url = `/api/users/${userId}`;
     fetching(
         dispatch,
         method.DELETE,
@@ -124,7 +124,7 @@ export const deleteUser = (userId) => async(dispatch, getState) => {
 
 export const updateUser = (user) => async (dispatch, getState) => {
     const {userSignin:{userInfo}} = getState();
-    const url = method.URL + `/api/users/${user._id}`;
+    const url = `/api/users/${user._id}`;
     fetching(
         dispatch,
         method.PUT,

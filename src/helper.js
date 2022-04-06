@@ -1,5 +1,6 @@
 import axios from "axios"
 import * as sc from "./constants/storageConstant";
+import {URL} from "./constants/AJAXConstant.js"
 
 export const getStorage = (storage) => {
     return localStorage.getItem(storage)
@@ -35,7 +36,7 @@ export const fetching = async (dispatch, method, url, requestConstant, successCo
         //const { data } = await Axios.get(url);
         const {data} = await axios({
             method: method,
-            url: url,
+            url: URL + url,
             data: option.sendData,
             headers: option.header,
         })

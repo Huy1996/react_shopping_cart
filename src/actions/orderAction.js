@@ -5,7 +5,7 @@ import * as method from '../constants/AJAXConstant'
 
 export const createOrder = (order) => async(dispatch, getState) => {
     const {userSignin:{userInfo}} = getState();
-    const url = method.URL + '/api/orders';
+    const url = '/api/orders';
     await fetching(
         dispatch,
         method.POST,
@@ -25,7 +25,7 @@ export const createOrder = (order) => async(dispatch, getState) => {
 
 export const detailsOrder = (orderId) => async (dispatch, getState) => {
     const {userSignin:{userInfo}} = getState();
-    const url = method.URL + `/api/orders/${orderId}`;
+    const url = `/api/orders/${orderId}`;
     await fetching(
         dispatch,
         method.GET,
@@ -41,7 +41,7 @@ export const detailsOrder = (orderId) => async (dispatch, getState) => {
 
 export const payOrder = (order, paymentResult) => async (dispatch, getState) => {
     const {userSignin:{userInfo}} = getState();
-    const url = method.URL + `/api/orders/${order._id}/pay`;
+    const url = `/api/orders/${order._id}/pay`;
     await fetching(
         dispatch,
         method.PUT,
@@ -58,7 +58,7 @@ export const payOrder = (order, paymentResult) => async (dispatch, getState) => 
 
 export const deliverOrder = (orderId) => async (dispatch, getState) => {
     const {userSignin:{userInfo}} = getState();
-    const url = method.URL + `/api/orders/${orderId}/deliver`;
+    const url = `/api/orders/${orderId}/deliver`;
     await fetching(
         dispatch,
         method.PUT,
@@ -74,7 +74,7 @@ export const deliverOrder = (orderId) => async (dispatch, getState) => {
 
 export const cancelOrder = (orderId) => async (dispatch, getState) => {
     const {userSignin:{userInfo}} = getState();
-    const url = method.URL + `/api/orders/${orderId}/cancelrequest`;
+    const url = `/api/orders/${orderId}/cancelrequest`;
     await fetching(
         dispatch,
         method.PUT,
@@ -90,7 +90,7 @@ export const cancelOrder = (orderId) => async (dispatch, getState) => {
 
 export const confirmCancelOrder = (orderId) => async (dispatch, getState) => {
     const {userSignin:{userInfo}} = getState();
-    const url = method.URL + `/api/orders/${orderId}/canceled`;
+    const url = `/api/orders/${orderId}/canceled`;
     await fetching(
         dispatch,
         method.PUT,
@@ -106,7 +106,7 @@ export const confirmCancelOrder = (orderId) => async (dispatch, getState) => {
 
 export const listOrderMine = ({pageNumber=''}) => async (dispatch, getState) => {
     const {userSignin:{userInfo}} = getState();
-    const url = method.URL + `/api/orders/mine?pageNumber=${pageNumber}`;
+    const url = `/api/orders/mine?pageNumber=${pageNumber}`;
     await fetching(
         dispatch,
         method.GET,
@@ -122,7 +122,7 @@ export const listOrderMine = ({pageNumber=''}) => async (dispatch, getState) => 
 
 export const listOrder = ({pageNumber=''}) => async (dispatch, getState) => {
     const {userSignin:{userInfo}} = getState();
-    const url = method.URL + `/api/orders?pageNumber=${pageNumber}`;
+    const url = `/api/orders?pageNumber=${pageNumber}`;
     await fetching(
         dispatch,
         method.GET,
@@ -138,7 +138,7 @@ export const listOrder = ({pageNumber=''}) => async (dispatch, getState) => {
 
 export const listOrderUser = ({pageNumber='', userId}) => async (dispatch, getState) => {
     const {userSignin:{userInfo}} = getState();
-    const url = method.URL + `/api/orders/user/${userId}?pageNumber=${pageNumber}`;
+    const url = `/api/orders/user/${userId}?pageNumber=${pageNumber}`;
     await fetching(
         dispatch,
         method.GET,
@@ -154,7 +154,7 @@ export const listOrderUser = ({pageNumber='', userId}) => async (dispatch, getSt
 
 export const deleteOrder = (orderId) => async (dispatch, getState) => {
     const {userSignin:{userInfo}} = getState();
-    const url = method.URL + `/api/orders/${orderId}`;
+    const url = `/api/orders/${orderId}`;
     await fetching(
         dispatch,
         method.DELETE,
@@ -170,7 +170,7 @@ export const deleteOrder = (orderId) => async (dispatch, getState) => {
 
 export const summaryOrder = () => async (dispatch, getState) => {
     const {userSignin:{userInfo}} = getState();
-    const url = method.URL + `/api/orders/summary`;
+    const url = `/api/orders/summary`;
     await fetching(
         dispatch,
         method.GET,
