@@ -1,5 +1,4 @@
 {
-  "homepage": "http://chtq-shopping.com/",
   "name": "react_shopping_cart",
   "version": "1.0.0",
   "private": true,
@@ -33,7 +32,7 @@
   },
   "scripts": {
     "start": "react-scripts start",
-    "build": "export NODE_OPTIONS='--max-old-space-size=2048' && react-scripts build",
+    "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
