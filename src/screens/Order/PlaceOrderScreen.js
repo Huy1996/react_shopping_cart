@@ -9,6 +9,7 @@ import { useNavigate } from 'react-router-dom';
 import Axios from "axios";
 import {PayPalButton} from "react-paypal-button-v2";
 import OrderItem from "../../components/Order/OrderItem";
+import {URL} from "../../constants/AJAXConstant";
 
 export default function PlaceOrderScreen(props) {
     const navigate = useNavigate();
@@ -42,7 +43,7 @@ export default function PlaceOrderScreen(props) {
 
     useEffect(() => {
         const addPayPalScript = async () => {
-            const { data } = await Axios.get('/api/config/paypal');
+            const { data } = await Axios.get(URL +'/api/config/paypal');
             console.log(data);
             const script = document.createElement('script');
             script.type = 'text/javascript';

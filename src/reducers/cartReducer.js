@@ -28,7 +28,7 @@ export const cartReducers = (state = {cartItems: []}, action) => {
                     ...state,
                     cartItems: [...state.cartItems, item],
                 };
-            };
+            }
         }
         case cc.CART_EDIT_ITEM: {
             const item = action.payload;

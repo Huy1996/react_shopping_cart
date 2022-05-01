@@ -7,9 +7,10 @@ import {
     CART_SAVE_SHIPPING_ADDRESS
 } from "../constants/cartConstant";
 import * as sc from '../constants/storageConstant'
+import {URL} from "../constants/AJAXConstant";
 
 export const addToCart = (productId, qty, options) => async (dispatch, getState) => {
-    const {data} = await Axios.get(`/api/products/${productId}`);
+    const {data} = await Axios.get(URL + `/api/products/${productId}`);
 
     dispatch({
         type: CART_ADD_ITEM,
@@ -27,7 +28,7 @@ export const addToCart = (productId, qty, options) => async (dispatch, getState)
 };
 
 export const editCart = (productId, qty, options) => async (dispatch, getState) => {
-    const {data} = await Axios.get(`/api/products/${productId}`);
+    const {data} = await Axios.get(URL + `/api/products/${productId}`);
 
     dispatch({
         type: CART_EDIT_ITEM,
