@@ -40,7 +40,8 @@ export default function ShippingAddressScreen(props) {
         }
         let moveOn = true;
         if(!newLat || !newLng){
-            moveOn = window.confirm('You did not set your location on map. Continue?');
+            //moveOn = window.confirm('You did not set your location on map. Continue?');
+            moveOn = true;
         }
         // Todo: dispatch save shipping address action
         if(moveOn){
@@ -48,12 +49,12 @@ export default function ShippingAddressScreen(props) {
             navigate('/payment');
         }        
     }
-
+    /*
     const chooseOnMap = () => {
         dispatch(saveShippingAddress({fullName, address, city, postalCode, country, lat, lng}));
         navigate('/map');
     }
-
+    */
     return (
         <div>
             <CheckoutSteps step1 step2></CheckoutSteps>
@@ -116,12 +117,12 @@ export default function ShippingAddressScreen(props) {
                         required
                     />
                 </div>
-                <div>
+                {/*<div>
                     <label htmlFor='chooseOnMap'>Location</label>
                     <button type='button' onClick={chooseOnMap}>
                         Choose On Map
                     </button>
-                </div>
+                </div>*/}
                 <div>
                     <label></label>
                     <button className='primary' type='submit'>

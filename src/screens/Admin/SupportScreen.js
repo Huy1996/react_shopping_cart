@@ -2,15 +2,16 @@ import React, { useEffect, useRef, useState } from 'react';
 import socketIOClient from 'socket.io-client';
 import { useSelector } from 'react-redux';
 import MessageBox from '../../components/Support/MessageBox';
+import {URL} from "../../constants/AJAXConstant";
 
 let allUsers = [];
 let allMessages = [];
 let allSelectedUser = {};
-const ENDPOINT =
-  window.location.host.indexOf('localhost') >= 0
-    ? 'http://127.0.0.1:5000'
+const ENDPOINT = URL
+/*  window.location.host.indexOf('localhost') >= 0
+    ? URL
     : window.location.host;
-
+*/
 export default function SupportScreen() {
   const [selectedUser, setSelectedUser] = useState({});
   const [socket, setSocket] = useState(null);

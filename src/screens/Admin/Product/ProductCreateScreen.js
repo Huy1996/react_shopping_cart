@@ -33,7 +33,17 @@ function ProductCreateScreen(props) {
             })
             navigate('/productlist/pageNumber/1');
         }
-    }, [dispatch, success])
+
+            setName('');
+            setPrice('');
+            setImage('');
+            setCategory('');
+            setCountInStock('');
+            setBrand('');
+            setAttribute([]);
+            setDescription('');
+
+    }, [dispatch, success, navigate])
 
 
     const submitHandler = (e) => {

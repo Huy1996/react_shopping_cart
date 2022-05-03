@@ -7,6 +7,7 @@ import ClassicEditor            from '@ckeditor/ckeditor5-build-classic';
 import { CKEditor }             from '@ckeditor/ckeditor5-react'
 import CreateAttribute from "./CreateAttribute";
 import Attribute from "./Attribute";
+import {URL} from "../../constants/AJAXConstant";
 
 function ProductEditor(props) {
 
@@ -30,7 +31,7 @@ function ProductEditor(props) {
         bodyFormDate.append('image', file);
         setLoadingUpload(true);
         try{
-            const {data} = await Axios.post('/api/uploads/s3', bodyFormDate, {
+            const {data} = await Axios.post(URL + '/api/uploads/s3', bodyFormDate, {
                 headers: {
                     'Content-Type': 'muttipart/form-data',
                     Authorization: `Bearer ${userInfo.token}`,
@@ -131,7 +132,7 @@ function ProductEditor(props) {
                                     />
                                     <datalist id='categories'>
                                         {
-                                            categories.map((c) => (
+                                            categories && categories.map((c) => (
                                                 <option value={c} />
                                             ))
                                         }

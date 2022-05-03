@@ -43,8 +43,9 @@ export default function UserDashboardScreen(props) {
         if(errorReview) return <MessageBox variant='danger' >{errorReview}</MessageBox>;
         if(countReview === 0) return <MessageBox>{user.name} haven't posted any product reviews.</MessageBox>;
         else{
+            let reviewList = reviews.slice().reverse()
             return <>
-                {reviews.map((review) => (
+                {reviewList.map((review) => (
                     <div className='row col card cart-body'>
                         <div className=' col-1 review-product'>
                             <Link to={`/product/${review.product._id}`}>
@@ -61,17 +62,50 @@ export default function UserDashboardScreen(props) {
         }
     }
 
+    const renderStatus = (orderDetail) => {
+        if(orderDetail.isCanceled){
+            return <div className='order-status'>
+                        <MessageBox variant="danger">
+                            Canceled at {formatDate(orderDetail.canceledAt)}
+                        </MessageBox>
+                   </div>
+        }
+        if(orderDetail.requestCancel){
+            return <div className='order-status'>
+                        <MessageBox variant="warning">
+                            Pending Cancel
+                        </MessageBox>
+                   </div>
+        }
+        if(orderDetail.isDelivered){
+            return <div className='order-status'>
+                        <MessageBox variant="success">
+                            Delivered at {formatDate(orderDetail.deliveredAt)}
+                        </MessageBox>
+                   </div>
+        }
+        else{
+            return <div className='order-status'>
+                        <MessageBox variant="danger">
+                            Not Delivered<br />
+                            {userInfo.isAdmin && <Link to={`/order/${orderDetail._id}`}>Delivery Order Now</Link>}
+                        </MessageBox>
+                   </div>
+        }
+    }
+
     const renderOrder = () => {
         if(loadingOrder) return <LoadingBox/>;
         if(errorOrder) return <MessageBox variant='danger'>{errorOrder}</MessageBox>;
         if(countOrder === 0) return <MessageBox>{user.name} haven't purchased anything.</MessageBox>;
         else{
+            let orderList = orders.slice().reverse();
             return <>
-                {orders.map((order) =>(
+                {orderList.map((order) =>(
                     <div className='row col card cart-body'>
                         <div className='min-30'>
                             <div style={{textAlign: 'center'}}> <h1>Order Status</h1></div>
-                            {order.isDelivered ? (
+                            {/*order.isDelivered ? (
                                 <div className='order-status'>
                                     <MessageBox variant="success">
                                         Delivered at {formatDate(order.deliveredAt)}
@@ -85,12 +119,16 @@ export default function UserDashboardScreen(props) {
                                     </MessageBox>
                                 </div>
 
+                            )*/}
+                            {renderStatus(order)}
+                            {
+                                !order.isCanceled && (
+                                <div className='order-status'>
+                                    <MessageBox variant="success" >
+                                        Paid at {formatDate(order.createdAt)}
+                                    </MessageBox>
+                                </div>
                             )}
-                            <div className='order-status'>
-                                <MessageBox variant="success" >
-                                    Paid at {formatDate(order.createdAt)}
-                                </MessageBox>
-                            </div>
                         </div>
                         <div className='card cart-body col-2' >
                             <Link to={`/order/${order._id}`} >

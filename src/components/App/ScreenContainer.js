@@ -61,6 +61,7 @@ export default function ScreenContainer(props) {
             <Route path='/product/:id/edit'                                                                                                        element={<Admin><ProductEditScreen/></Admin>}       exact />
             <Route path='/product/create'                                                                                                          element={<Admin><ProductCreateScreen/></Admin>}           />
             <Route path="/"                                                                                                                        element={<HomeScreen/>}                             exact />
+            <Route path="/pageNumber/:pageNumber"                                                                                                  element={<HomeScreen/>}                             exact />
         </Routes>
     );
 }
