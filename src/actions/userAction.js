@@ -19,7 +19,6 @@ export const signin = (email, password) => async (dispatch) => {
             storeName:  sc.USER_INFO
         }
     )
-
 }
 
 export const  register = (name, email, password) => async (dispatch) => {

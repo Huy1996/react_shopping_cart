@@ -7,7 +7,6 @@ import Footer from "./components/App/Footer";
 
 export default function App() {
     const [sidebarIsOpen, setSidebarIsOpen] = useState(false);
-
     return (
         <BrowserRouter>
             <div className="grid-container">
